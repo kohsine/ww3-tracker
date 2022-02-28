@@ -19,6 +19,7 @@ This application allows users to submit multimedia (images, videos, news article
 
 ## Final features
 ---
+- Preview content on map
 - Custom icons for map marker
 - Content may be filtered / sorted
 - Moderators can control content
