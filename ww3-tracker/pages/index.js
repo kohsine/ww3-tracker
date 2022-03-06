@@ -1,4 +1,5 @@
 import useSWR from 'swr'
+import SimpleMap from '../components/map'
 
 const fetcher = (query) =>
   fetch('/api/graphql', {
@@ -12,7 +13,10 @@ const fetcher = (query) =>
     .then((json) => json.data)
 
 export default function Index() {
-  const { data, error } = useSWR('{ users { name } }', fetcher)
+  return (
+    <SimpleMap />
+  )
+  /*const { data, error } = useSWR('{ users { name } }', fetcher)
 
   if (error) return <div>Failed to load</div>
   if (!data) return <div>Loading...</div>
@@ -25,5 +29,5 @@ export default function Index() {
         <div key={i}>{user.name}</div>
       ))}
     </div>
-  )
+  )*/
 }
