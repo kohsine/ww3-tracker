@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import SimpleMap from '../components/map'
+import SimpleMap from '../components/map/map'
 import Login from './auth/login'
 
 const fetcher = (query) =>
@@ -14,9 +14,9 @@ const fetcher = (query) =>
     .then((json) => json.data)
 
 export default function Index() {
-  // return (
-  //   <SimpleMap />
-  // )
+  return (
+    <SimpleMap />
+  )
   const { data, error } = useSWR('{ users { name } }', fetcher)
 
   if (error) return <div>Failed to load</div>
