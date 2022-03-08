@@ -1,22 +1,12 @@
 import useSWR from 'swr'
 import SimpleMap from '../components/map/map'
 import Login from './auth/login'
-
-const fetcher = (query) =>
-  fetch('/api/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify({ query }),
-  })
-    .then((res) => res.json())
-    .then((json) => json.data)
+import fetcher from '../utils/fetcher'
 
 export default function Index() {
-  return (
-    <SimpleMap />
-  )
+  // return (
+  //   <SimpleMap />
+  // )
   const { data, error } = useSWR('{ users { name } }', fetcher)
 
   if (error) return <div>Failed to load</div>
@@ -26,7 +16,9 @@ export default function Index() {
 
   return (
     <div>
-      <Login/>
+      {
+        !users && <Login />
+      }
       {users.map((user, i) => (
         <div key={i}>{user.name}</div>
       ))}
