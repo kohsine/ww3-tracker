@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import SimpleMap from '../components/map'
+import SimpleMap from '../components/map.jsx'
 
 const fetcher = (query) =>
   fetch('/api/graphql', {
