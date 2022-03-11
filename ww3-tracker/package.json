@@ -1,10 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next",
+    "dev": "docker-compose up -d && next",
     "build": "next build",
-    "start": "next start",
-    "resetdb": "psql -f resetdb.sql -d ww3Database"
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.8.1",

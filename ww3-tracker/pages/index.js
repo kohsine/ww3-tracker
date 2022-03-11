@@ -1,18 +1,17 @@
 import useSWR from 'swr'
 import SimpleMap from '../components/map/map'
 import Login from './auth/login'
-import fetcher from '../utils/fetcher'
+import { gql_fetcher } from '../utils/fetcher'
 
 export default function Index() {
   // return (
   //   <SimpleMap />
-  // )
-  const { data, error } = useSWR('{ users { name } }', fetcher)
-
+  // ) 
+  const { error , data } = useSWR('{ users { nodes { username } } }', gql_fetcher);
   if (error) return <div>Failed to load</div>
   if (!data) return <div>Loading...</div>
-
-  const { users } = data
+  console.log("data " + JSON.stringify(data));
+  const users = data.users.nodes;
 
   return (
     <div>
@@ -20,7 +19,7 @@ export default function Index() {
         !users && <Login />
       }
       {users.map((user, i) => (
-        <div key={i}>{user.name}</div>
+        <div key={i}>{user.username}</div>
       ))}
     </div>
   )
