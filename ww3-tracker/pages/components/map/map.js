@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import MapMarker from './marker';
 import { mapPoints } from '../../../utils/testData';
 import useSupercluster from 'use-supercluster';
-
+import {ukrainePoly} from './ukraine-poly-reduced';
 
 /**
  * Much of this code is taken from the example at https://www.leighhalliday.com/google-maps-clustering
@@ -38,11 +38,12 @@ export default function Map(props) {
         options: { radius: 75, maxZoom: 15 }
     });
 
-    const { onMarkerClick = () => {}} = props;
+    const { onMarkerClick = () => { } } = props;
 
+   
 
     return <>
-        <div style={{ height: '100vh', width: '100%' }}>
+        <div style={{ height: '80vh', width: '80%' }}>
 
             <GoogleMapReact
                 bootstrapURLKeys={{ key: "AIzaSyDELfmgebaV3wanKz383-IKuAl6HcIPwMA" }}
@@ -52,7 +53,20 @@ export default function Map(props) {
                 }}
                 defaultZoom={7}
                 yesIWantToUseGoogleMapApiInternals
-                onGoogleApiLoaded={({ map }) => { mapRef.current = map }}
+                onGoogleApiLoaded={({ map, maps }) => {
+                    mapRef.current = map;
+
+                    const polygon = new maps.Polygon({
+                        paths: ukrainePoly,
+                        strokeColor: "#FF0000",
+                        strokeOpacity: 0.8,
+                        strokeWeight: 5,
+                        fillColor: "#FF0000",
+                        fillOpacity: 0.35
+                    });
+
+                    polygon.setMap(map)
+                }}
                 onChange={({ zoom, bounds }) => {
                     setZoom(zoom);
                     setBounds([bounds.nw.lng, bounds.se.lat, bounds.se.lng, bounds.nw.lat]);
@@ -67,7 +81,7 @@ export default function Map(props) {
                     if (isCluster) {
                         return (
                             <div
-                                key={cluster.id}
+                                key={cluster.name}
                                 lat={latitude}
                                 lng={longitude}
                                 style={clusterStyle}
@@ -86,7 +100,7 @@ export default function Map(props) {
                     }
                     return (
                         <MapMarker
-                            key={cluster.properties.id}
+                            key={cluster.properties.name}
                             lat={latitude}
                             lng={longitude}
                             style={pointStyle}
