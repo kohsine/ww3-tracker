@@ -60,8 +60,8 @@ export default function Map(props) {
                         paths: ukrainePoly,
                         strokeColor: "#FF0000",
                         strokeOpacity: 0.8,
-                        strokeWeight: 5,
-                        fillColor: "#FF0000",
+                        strokeWeight: 3,
+                        fillColor: "#FF000070",
                         fillOpacity: 0.35
                     });
 
