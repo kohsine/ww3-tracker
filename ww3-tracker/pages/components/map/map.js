@@ -3,7 +3,8 @@ import GoogleMapReact from 'google-map-react';
 import MapMarker from './marker';
 import { mapPoints } from '../../../utils/testData';
 import useSupercluster from 'use-supercluster';
-import {ukrainePoly} from './ukraine-poly-reduced';
+import { ukrainePoly } from './ukraine-poly-reduced';
+import { Button } from '@mui/material';
 
 /**
  * Much of this code is taken from the example at https://www.leighhalliday.com/google-maps-clustering
@@ -11,11 +12,11 @@ import {ukrainePoly} from './ukraine-poly-reduced';
 
 const clusterStyle = {
     color: "#fff",
-    background: "#197878",
+    background: "#a11b1b",
     borderRadius: "50%",
     padding: "10px",
-    width: "15px",
-    height: "15px",
+    width: "10px",
+    height: "10px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -23,12 +24,15 @@ const clusterStyle = {
     fontWeight: "900",
 }
 
-const pointStyle = {}
+const pointStyle = {
+    transform: "translate(-50%, -50%)",
+}
 
 export default function Map(props) {
     const mapRef = useRef();
     const [bounds, setBounds] = useState(null);
     const [zoom, setZoom] = useState(10);
+    const [clickMarker, setClickMarker] = useState(null);
 
     const points = mapPoints;
     const { clusters, supercluster } = useSupercluster({
@@ -38,20 +42,28 @@ export default function Map(props) {
         options: { radius: 75, maxZoom: 15 }
     });
 
-    const { onMarkerClick = () => { } } = props;
-
-   
+    const {
+        onMarkerClick = () => { },
+        onMapClick = (lat, lng) => { },
+        style = { width: "100vw", height: "100vh" }
+    } = props;
 
     return <>
-        <div style={{ height: '80vh', width: '80%' }}>
+        <div style={style}>
+            {
+                clickMarker &&
+                <Button style={{ position: 'absolute', top: '5px', left: '50%', transform: 'translate(-50%, 0)', zIndex: 10 }} variant="contained" onClick={() => { setClickMarker(null) }}>
+                    Clear marker (right click)
+                </Button>
+            }
 
             <GoogleMapReact
                 bootstrapURLKeys={{ key: "AIzaSyDELfmgebaV3wanKz383-IKuAl6HcIPwMA" }}
                 defaultCenter={{
-                    lat: 49.15,
-                    lng: 30.43
+                    lat: 48.4,
+                    lng: 31.3
                 }}
-                defaultZoom={7}
+                defaultZoom={6}
                 yesIWantToUseGoogleMapApiInternals
                 onGoogleApiLoaded={({ map, maps }) => {
                     mapRef.current = map;
@@ -61,8 +73,17 @@ export default function Map(props) {
                         strokeColor: "#FF0000",
                         strokeOpacity: 0.8,
                         strokeWeight: 3,
-                        fillColor: "#FF000070",
-                        fillOpacity: 0.35
+                        fillColor: "#FF0000",
+                        fillOpacity: 0.15
+                    });
+
+                    maps.event.addListener(map, 'contextmenu', (e) => {
+                        setClickMarker(null)
+                        onMapClick(null)
+                    });
+                    maps.event.addListener(polygon, 'contextmenu', (e) => {
+                        setClickMarker(null)
+                        onMapClick(null)
                     });
 
                     polygon.setMap(map)
@@ -71,10 +92,25 @@ export default function Map(props) {
                     setZoom(zoom);
                     setBounds([bounds.nw.lng, bounds.se.lat, bounds.se.lng, bounds.nw.lat]);
                 }}
+                onClick={({ x, y, lat, lng, event }) => {
+                    setClickMarker({ lat, lng });
+                    onMapClick(lat, lng);
+                }}
             >
 
+                {
+                    clickMarker &&
+                    <MapMarker
+                        lat={clickMarker.lat}
+                        lng={clickMarker.lng}
+                        style={{...pointStyle, pointerEvents: 'none'}}
+                        size={36}
+                        color={'#2D4263'}
+                    />
+                }
+
+
                 {clusters.map(cluster => {
-                    console.log(cluster)
                     const [longitude, latitude] = cluster.geometry.coordinates;
                     const { cluster: isCluster, point_count: pointCount } = cluster.properties;
 
@@ -104,8 +140,8 @@ export default function Map(props) {
                             lat={latitude}
                             lng={longitude}
                             style={pointStyle}
-                            size={30}
-                            color={'#1976d2'}
+                            size={36}
+                            color={'#fa2020'}
                             onClick={() => onMarkerClick(cluster.properties)}
                         />
                     );
