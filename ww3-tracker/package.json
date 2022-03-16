@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "docker-compose --env-file ./.env up -d  && next",
+    "dev1": "next",
     "build": "next build",
     "start": "next start"
   },
@@ -11,12 +12,15 @@
     "@mui/material": "^5.5.0",
     "apollo-server-micro": "^3.0.1",
     "aws-sdk": "^2.1095.0",
+    "axios": "^0.26.1",
     "cookies-next": "^2.0.4",
     "google-map-react": "^2.1.10",
     "graphql": "^15.5.1",
     "jsonwebtoken": "^8.5.1",
     "micro": "^9.3.4",
+    "multer": "^1.4.4",
     "next": "latest",
+    "next-connect": "^0.12.2",
     "pg": "^8.7.3",
     "postgraphile": "^4.12.9",
     "react": "^17.0.2",

@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next';
 import SubmitContent from './components/content/submitContent'
 import Map from './components/map/map'
+import { UiFileInputButton } from './components/upload/UiFileInputButton'
 
 // #191919
 // #2D4263
@@ -26,6 +27,20 @@ export default function Index() {
         setUsername(undefined);
     }
 
+    const onChangeFile = async (formData) => {
+      const axios = require('axios');
+      const config = {
+        headers: { 'content-type': 'multipart/form-data' },
+        onUploadProgress: (event) => {
+          console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
+        },
+      };
+  
+      const response = await axios.post('/api/upload', formData, config);
+  
+      console.log('response', response.data);
+    };
+
     const router = useRouter();
 
     return (
@@ -44,7 +59,6 @@ export default function Index() {
 
                 <Container maxWidth={false}>
                     <Stack direction="column" justifyContent="center" alignItems="center" spacing={2} style={{ backgroundColor: '' }}>
-
                         <Stack spacing={2} direction="row" justifyContent="space-between" alignItems="center" marginBottom="20px" style={{ width: '100%' }} >
                             <div></div>
                             <h1 style={{ fontWeight: 200, color: '#ECDBBA' }}>World War III Tracker</h1>
@@ -70,6 +84,11 @@ export default function Index() {
                                         </Stack>
                                     )
                             }
+                            <UiFileInputButton
+                              label="Upload Single File"
+                              uploadFileName="theFiles"
+                              onChange={onChangeFile}
+                            />
                         </Stack>
 
                         <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} width="100%" style={{}}>
