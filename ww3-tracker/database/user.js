@@ -1,16 +1,10 @@
 const { Pool, Client } = require('pg')
+import { pg_config } from './connect'
 
 class UserAPI {
   async getAllUsers() {
 
-    const client = new Client({
-      user: 'postgres',
-      host: 'localhost',
-      database: 'forum_example',
-      password: 'example',
-      port: 5432,
-      schema: 'public',
-    })
+    const client = new Client(pg_config)
     client.connect()
     return client.query('SELECT * FROM "user";')
     .then(res => {
@@ -18,6 +12,7 @@ class UserAPI {
       return res.rows;
     })
     .catch(e => console.error(e.stack))
+    .finally(() => client.end());
   }
 }
 

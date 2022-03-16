@@ -13,6 +13,12 @@ export default function Index() {
 
     useEffect(() => setUsername(getCookie("username")), []);
 
+    const signoutHandler = () => {
+      removeCookies('username');
+      removeCookies('token');
+      setUsername(undefined);
+    }
+
     const router = useRouter();
 
     return (
@@ -30,10 +36,7 @@ export default function Index() {
                                     <Stack direction="row" alignItems="baseline" spacing={4}>
                                         <h3 style={{ fontWeight: 200 }}>Hello, {username}</h3>
                                         <Button size="small" id="signout" variant="outlined"
-                                            onClick={() => {
-                                                removeCookies();
-                                                router.push('/');
-                                            }}
+                                            onClick={() => signoutHandler()}
                                         >
                                             Signout
                                         </Button>

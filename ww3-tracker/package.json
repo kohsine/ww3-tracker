@@ -16,7 +16,6 @@
     "jsonwebtoken": "^8.5.1",
     "micro": "^9.3.4",
     "next": "latest",
-    "next-auth": "^4.2.1",
     "pg": "^8.7.3",
     "postgraphile": "^4.12.9",
     "react": "^17.0.2",
