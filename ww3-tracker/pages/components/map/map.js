@@ -94,7 +94,7 @@ export default function Map(props) {
                 }}
                 onClick={({ x, y, lat, lng, event }) => {
                     setClickMarker({ lat, lng });
-                    onMapClick(lat, lng);
+                    onMapClick({lat, lng});
                 }}
             >
 

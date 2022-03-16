@@ -89,7 +89,7 @@ export default function Index() {
                                 </Box>
                             </Stack>
                         </Stack>
-                        <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false) }} />
+                        <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false) }} coords={selectedCoords}/>
 
 
 
