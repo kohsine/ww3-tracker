@@ -1,6 +1,7 @@
 import { styled, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Button, Stack, Tabs, Tab, Box, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { HiOutlineUpload } from 'react-icons/hi'
+import { UiFileInputButton } from '../upload/UiFileInputButton'
 
 const Input = styled('input')({
     display: 'none',
@@ -10,11 +11,11 @@ export default function SubmitContent(props) {
 
     
     const { open, onClose, coords } = props
-    const [file, setFile] = useState(null)
+    const [file, setFile] = useState("");
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [lat, setLat] = useState(null);
-    const [lng, setLng] = useState(null);
+    const [lat, setLat] = useState(200);
+    const [lng, setLng] = useState(200);
     const [url, setUrl] = useState('');
     const [mediaType, setMediaType] = useState(0);
 
@@ -35,23 +36,39 @@ export default function SubmitContent(props) {
     }, [coords])
 
     function submit() {
-        const formData = new FormData();
-        formData.append('title', title)
-        formData.append('description', description)
-        formData.append('lat', lat)
-        formData.append('lng', lng)
-        if (mediaType === 1) {
-            formData.append('url', url)
-        } else {
-            formData.append('file', file)
-        }
+      const formData = new FormData();
+      formData.append('title', title)
+      formData.append('description', description)
+      formData.append('lat', lat)
+      formData.append('lng', lng)
+      if (mediaType === 1) {
+        formData.append('url', url)
+      } else {
+        formData.append('file', file)
+      }
+      // TODO
+      for (let i of formData.values()) {
+        console.log(i)
+      }
 
-        // TODO
-        for (let i of formData.values()) {
-            console.log(i)
-        }
-
+      const fileData = new FormData();
+      fileData.append('theFiles', file);
+      submitFile(fileData);
     }
+
+    const submitFile = async (formData) => {
+      const axios = require('axios');
+      const config = {
+        headers: { 'content-type': 'multipart/form-data' },
+        onUploadProgress: (event) => {
+          console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
+        },
+      };
+  
+      const response = await axios.post('/api/upload', formData, config);
+  
+      console.log('response', response.data);
+    };
 
     return <Dialog open={open} onClose={onClose}>
         <DialogTitle>Submit New Content</DialogTitle>
@@ -69,10 +86,15 @@ export default function SubmitContent(props) {
                 </Tabs>
                 <TabPanel value={mediaType} index={0}>
                     <label htmlFor="contained-button-file">
-                        <Input accept="image/*" id="contained-button-file" multiple type="file" onChange={handleChange} />
+                        {/*<Input accept="image/*" id="contained-button-file" multiple type="file" onChange={handleChange} />
                         <Button variant="contained" component="span" startIcon={<HiOutlineUpload />}>
                             {file?.name || "Upload"}
-                        </Button>
+  </Button>*/}
+                      <UiFileInputButton
+                        label="Upload Single File"
+                        uploadFileName="theFiles"
+                        setFile={setFile}
+                      />
                     </label>
                 </TabPanel>
                 <TabPanel value={mediaType} index={1}>

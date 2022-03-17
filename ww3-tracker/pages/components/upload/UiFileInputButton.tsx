@@ -1,4 +1,6 @@
-import { useRef } from "react";
+import { styled, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Button, Stack, Tabs, Tab, Box, Typography } from '@mui/material'
+import React, { useEffect, useState, useRef } from 'react'
+import { HiOutlineUpload } from 'react-icons/hi'
 
 export interface IProps {
   acceptedFileTypes?: string;
@@ -6,6 +8,7 @@ export interface IProps {
   label: string;
   onChange: (formData: FormData) => void;
   uploadFileName: string;
+  setFile: (file: File) => void;
 }
 
 export const UiFileInputButton: React.FC<IProps> = (props) => {
@@ -25,18 +28,19 @@ export const UiFileInputButton: React.FC<IProps> = (props) => {
 
     Array.from(event.target.files).forEach((file) => {
       formData.append(event.target.name, file);
+      props.setFile(file);
     });
 
-    props.onChange(formData);
+    //props.onChange(formData);
 
     formRef.current?.reset();
   };
 
   return (
     <form ref={formRef}>
-      <button type="button" onClick={onClickHandler}>
-        {props.label}
-      </button>
+      <Button variant="contained" component="span" startIcon={<HiOutlineUpload />} onClick={onClickHandler}>
+        Upload
+      </Button>
       <input
         accept={props.acceptedFileTypes}
         multiple={props.allowMultipleFiles}

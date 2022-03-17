@@ -84,11 +84,6 @@ export default function Index() {
                                         </Stack>
                                     )
                             }
-                            <UiFileInputButton
-                              label="Upload Single File"
-                              uploadFileName="theFiles"
-                              onChange={onChangeFile}
-                            />
                         </Stack>
 
                         <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} width="100%" style={{}}>
