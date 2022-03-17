@@ -54,6 +54,11 @@ export default function SubmitContent(props) {
       const fileData = new FormData();
       fileData.append('theFiles', file);
       const url = await submitFile(fileData);
+      setFile("");
+      setTitle("");
+      setDescription("");
+      setLat("");
+      setLng("");
       console.log("url " + url);
     }
 
