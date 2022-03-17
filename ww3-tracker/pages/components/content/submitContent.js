@@ -14,8 +14,8 @@ export default function SubmitContent(props) {
     const [file, setFile] = useState("");
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [lat, setLat] = useState(200);
-    const [lng, setLng] = useState(200);
+    const [lat, setLat] = useState("");
+    const [lng, setLng] = useState("");
     const [url, setUrl] = useState('');
     const [mediaType, setMediaType] = useState(0);
 
@@ -30,8 +30,8 @@ export default function SubmitContent(props) {
             setLat(coords.lat)
             setLng(coords.lng)
         } else {
-            setLat(null)
-            setLng(null)
+            setLat("")
+            setLng("")
         }
     }, [coords])
 
