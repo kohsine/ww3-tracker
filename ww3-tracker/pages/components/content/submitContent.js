@@ -35,7 +35,7 @@ export default function SubmitContent(props) {
         }
     }, [coords])
 
-    function submit() {
+    async function submit() {
       const formData = new FormData();
       formData.append('title', title)
       formData.append('description', description)
@@ -53,7 +53,8 @@ export default function SubmitContent(props) {
 
       const fileData = new FormData();
       fileData.append('theFiles', file);
-      submitFile(fileData);
+      const url = await submitFile(fileData);
+      console.log("url " + url);
     }
 
     const submitFile = async (formData) => {
@@ -68,6 +69,7 @@ export default function SubmitContent(props) {
       const response = await axios.post('/api/upload', formData, config);
   
       console.log('response', response.data);
+      return response.data.url;
     };
 
     return <Dialog open={open} onClose={onClose}>

@@ -1,12 +1,15 @@
 import { ApolloServer, gql } from 'apollo-server-micro'
 import UserAPI from '../../database/user'
+import PostAPI from '../../database/post';
 import typeDefs from '../../graphql/schema';
 
 const resolvers = require('../../graphql/resolvers');
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers, dataSources: () => ({
-  userAPI: new UserAPI()
-}) })
+    userAPI: new UserAPI(),
+    postAPI: new PostAPI()
+  }) 
+})
 
 const startServer = apolloServer.start()
 

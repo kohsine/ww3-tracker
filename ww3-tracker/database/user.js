@@ -6,13 +6,17 @@ class UserAPI {
 
     const client = new Client(pg_config)
     client.connect()
-    return client.query('SELECT * FROM "user";')
+    return client.query('SELECT * FROM users;')
     .then(res => {
-      console.log(JSON.stringify(res.rows));
       return res.rows;
     })
     .catch(e => console.error(e.stack))
     .finally(() => client.end());
+  }
+
+  async getUserByUsername({ username }) {
+    console.log("username " + username);
+    return { username: username };
   }
 }
 

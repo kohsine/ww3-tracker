@@ -20,8 +20,10 @@ const apiRoute = nextConnect({
 apiRoute.use(upload.array('theFiles'));
 
 // Process a POST request
-apiRoute.post((req, res) => {
-  res.status(200).json({ data: 'success' });
+apiRoute.post(async (req, res) => {
+  const crypto = await import('crypto');
+  const url = "http://some-link.com/" + crypto.randomUUID();
+  res.status(200).json({ data: 'success', url });
 });
 
 export default apiRoute;
