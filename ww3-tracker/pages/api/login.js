@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
   const client = new Client(pg_config)
   client.connect()
-  const user = await client.query(`SELECT * FROM "user" WHERE username = '${username}';`)
+  const user = await client.query(`SELECT * FROM users WHERE username = '${username}';`)
   .then(res => res.rows[0])
   .catch(e => console.error(e.stack))
   .finally(() => client.end());
