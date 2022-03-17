@@ -54,12 +54,12 @@ export default function SubmitContent(props) {
       const fileData = new FormData();
       fileData.append('theFiles', file);
       const url = await submitFile(fileData);
+      console.log("url " + url);
       setFile("");
       setTitle("");
       setDescription("");
       setLat("");
       setLng("");
-      console.log("url " + url);
     }
 
     const submitFile = async (formData) => {
@@ -101,6 +101,7 @@ export default function SubmitContent(props) {
                         label="Upload Single File"
                         uploadFileName="theFiles"
                         setFile={setFile}
+                        buttonLabel={file?.name || "Upload"}
                       />
                     </label>
                 </TabPanel>

@@ -9,6 +9,7 @@ export interface IProps {
   onChange: (formData: FormData) => void;
   uploadFileName: string;
   setFile: (file: File) => void;
+  buttonLabel: string;
 }
 
 export const UiFileInputButton: React.FC<IProps> = (props) => {
@@ -37,7 +38,7 @@ export const UiFileInputButton: React.FC<IProps> = (props) => {
   return (
     <>
       <Button variant="contained" component="span" startIcon={<HiOutlineUpload />} onClick={onClickHandler}>
-        Upload
+        {props.buttonLabel}
       </Button>
       <input
         accept={props.acceptedFileTypes}
