@@ -1,5 +1,6 @@
 const { Pool, Client } = require('pg')
 import { pg_config } from './connect'
+import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next';
 
 class PostAPI {
 
@@ -31,6 +32,14 @@ class PostAPI {
     } finally {
       client.end()
     }
+  }
+
+  async submitPost({ title, description, lon, lat, url, user }) {
+    const username = getCookie('username');
+    console.log("username " + user);
+    console.log("title " + title);
+
+    return {success: true, message: "ok"};
   }
 }
 
