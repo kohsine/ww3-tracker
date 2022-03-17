@@ -2,7 +2,6 @@ import { ApolloServer, gql } from 'apollo-server-micro'
 import UserAPI from '../../database/user'
 import PostAPI from '../../database/post';
 import typeDefs from '../../graphql/schema';
-import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next';
 
 const resolvers = require('../../graphql/resolvers');
 
@@ -11,12 +10,7 @@ const apolloServer = new ApolloServer({ typeDefs, resolvers, dataSources: () => 
     postAPI: new PostAPI()
   }),
   context: ({ req: MicroRequest, res: ServerResponse }) => {
-    const token = MicroRequest.headers.authorization || '';
-    console.log("token " + token);
-    console.log("cookies " + JSON.stringify(MicroRequest.cookies));
     const user = MicroRequest.cookies.username;
-    console.log("user " + user);
-    //const user = getUser(token);
     return { user };
   }
 })
