@@ -1,12 +1,9 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
+import uploadFile from '../../utils/s3';
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: './public/uploads',
-    filename: (req, file, cb) => cb(null, file.originalname),
-  }),
-});
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
@@ -17,12 +14,16 @@ const apiRoute = nextConnect({
   },
 });
 
-apiRoute.use(upload.array('theFiles'));
+apiRoute.use(upload.single('theFiles'));
 
 // Process a POST request
 apiRoute.post(async (req, res) => {
   const crypto = await import('crypto');
-  const url = "http://some-link.com/" + crypto.randomUUID();
+  // const url = "http://some-link.com/" + crypto.randomUUID();
+  console.log(req.file, req.body)
+  const url = await uploadFile(req.file);
+  console.log("url " + url);
+
   res.status(200).json({ data: 'success', url });
 });
 

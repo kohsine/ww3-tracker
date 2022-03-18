@@ -24,8 +24,8 @@ export default function SubmitContent(props) {
     const [file, setFile] = useState("");
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [lat, setLat] = useState(200);
-    const [lng, setLng] = useState(200);
+    const [lat, setLat] = useState('');
+    const [lng, setLng] = useState('');
     const [url, setUrl] = useState('');
     const [mediaType, setMediaType] = useState(0);
     const [submitPost, { loading, error}] = useMutation(SUBMIT_POST);
@@ -50,9 +50,10 @@ export default function SubmitContent(props) {
       const fileData = new FormData();
       fileData.append('theFiles', file);
       const url = await submitFile(fileData);
-      setUrl(url);
 
-      const res = await submitPost({ variables: { title, url, description, lng: lng, lat } });
+      setLng(parseFloat(lng));
+      setLat(parseFloat(lat));
+      const res = await submitPost({ variables: { title, url, description, lng, lat } });
       console.log("res " + JSON.stringify(res));
 
       setFile("");
@@ -85,8 +86,8 @@ export default function SubmitContent(props) {
 
                 <TextField label="Title" required value={title} onChange={e => {setTitle(e.target.value)}}/>
                 <TextField label="Description" required value={description} onChange={e => {setDescription(e.target.value)}}/>
-                <TextField label="Lat" required value={lat} onChange={e => {setLat(parseFloat(e.target.value))}}/>
-                <TextField label="Lng" required value={lng} onChange={e => {setLng(parseFloat(e.target.value))}}/>
+                <TextField label="Lat" required value={lat} onChange={e => {setLat(e.target.value)}}/>
+                <TextField label="Lng" required value={lng} onChange={e => {setLng(e.target.value)}}/>
                 <Tabs value={mediaType} onChange={(e, v) => {setMediaType(v)}}>
                     <Tab label="file" {...a11yProps(0)}/>
                     <Tab label="url" {...a11yProps(1)}/>
