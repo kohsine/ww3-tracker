@@ -1,7 +1,10 @@
+import { getLinkPreview } from "link-preview-js";
+
 export const Query = {
   users: (_, __, { dataSources }) => dataSources.userAPI.getAllUsers(),
   user: (_, { username }, { dataSources }) => dataSources.userAPI.getUserByUsername({ username: username }),
-  posts: (_, __, { dataSources }) => dataSources.postAPI.getAllPosts()
+  posts: (_, __, { dataSources }) => dataSources.postAPI.getAllPosts(),
+  preview: (_, { url }, { dataSources }) => getLinkPreview(url),
 };
 
 export const Mutation = {

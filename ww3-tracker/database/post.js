@@ -11,9 +11,6 @@ class PostAPI {
       lng: post.lng,
       lat: post.lat,
       url: post.url,
-      media_type: post.media_type,
-      content_type: post.content_type,
-      favicon: post.favicon,
       author: {
         username: post.username
       }
@@ -38,8 +35,8 @@ class PostAPI {
   async submitPost(args) {
     console.log("username " + args.user);
 
-    const text = 'INSERT INTO posts(title, description, lng, lat, author, url, media_type, content_type, favicon) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *';
-    const values = [args.title, args.description, args.lng, args.lat, args.user, args.url, args.media_type, args.content_type, args.favicon];
+    const text = 'INSERT INTO posts(title, description, lng, lat, author, url) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
+    const values = [args.title, args.description, args.lng, args.lat, args.user, args.url];
     ;
 
     const client = new Client(pg_config);

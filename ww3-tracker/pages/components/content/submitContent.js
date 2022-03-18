@@ -8,8 +8,8 @@ const Input = styled('input')({
 });
 
 export const SUBMIT_POST = gql`
-  mutation Mutation($title: String!, $url: String!, $description: String, $lng: Float, $lat: Float, $mediaType: String, $contentType: String, $favicon: String) {
-    submitPost(title: $title, url: $url, description: $description, lng: $lng, lat: $lat, media_type: $mediaType, content_type: $contentType, favicon: $favicon) {
+  mutation Mutation($title: String!, $url: String!, $description: String, $lng: Float, $lat: Float) {
+    submitPost(title: $title, url: $url, description: $description, lng: $lng, lat: $lat) {
       success
       message
       postId
@@ -41,36 +41,40 @@ export default function SubmitContent(props) {
         }
     }, [coords])
 
+    function submitDisabled() {
+        if (!title || !description || !lat || !lng || !(url || file)) 
+            return true;
+        return false;
+    }
+
     async function submit() {
-      setDisabled(true);
-      let url_meta;
-      if (mediaType === 0) {
-        const fileData = new FormData();
-        fileData.append('theFiles', file);
-        ({ url_meta } = await submitFile(fileData));
-        console.log("url meta " + JSON.stringify(url_meta));
-      }
+        setDisabled(true);
+        let url_meta;
+        if (mediaType === 0) {
+            const fileData = new FormData();
+            fileData.append('theFiles', file);
+            ({ url_meta } = await submitFile(fileData));
+            console.log("url meta " + JSON.stringify(url_meta));
+        }
 
-      const res = await submitPost({ 
-        variables: { 
-          title, 
-          url: mediaType === 0 ? url_meta.url : url, 
-          description, 
-          lng: parseFloat(lng), 
-          lat: parseFloat(lat), 
-          mediaType: url_meta.mediaType,
-          contentType: url_meta.contentType,
-          favicon: url_meta.favicons[0]
-        } 
-      });
-      setDisabled(false);
+        const res = await submitPost({
+            variables: {
+                title,
+                url: mediaType === 0 ? url_meta.url : url,
+                description,
+                lng: parseFloat(lng),
+                lat: parseFloat(lat),
+            }
+        });
+        onClose();
+        setDisabled(false);
 
-      setFile("");
-      setTitle("");
-      setDescription("");
-      setLat("");
-      setLng("");
-      setUrl("");
+        setFile("");
+        setTitle("");
+        setDescription("");
+        setLat("");
+        setLng("");
+        setUrl("");
     }
 
     const submitFile = async (formData) => {
@@ -113,10 +117,10 @@ export default function SubmitContent(props) {
                     </label>
                 </TabPanel>
                 <TabPanel value={mediaType} index={1}>
-                    <TextField label="URL" fullWidth value={url} onChange={e => { setUrl(e.target.value) }}/>
+                    <TextField label="URL" fullWidth value={url} onChange={e => { setUrl(e.target.value) }} />
                 </TabPanel>
 
-                <Button onClick={submit} disabled={disabled}>Submit</Button>
+                <Button onClick={submit} disabled={disabled || submitDisabled()}>Submit</Button>
 
             </Stack>
         </DialogContent>

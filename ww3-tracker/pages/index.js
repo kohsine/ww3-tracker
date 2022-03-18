@@ -34,7 +34,7 @@ export default function Index() {
     const [createIsOpen, setCreateIsOpen] = useState(false);
     const [selectedCoords, setSelectedCoords] = useState(null);
     const [points, setPoints] = useState([]);
-    
+
     const { loading, error, data, refetch } = useQuery(GET_POSTS);
 
     useEffect(() => {

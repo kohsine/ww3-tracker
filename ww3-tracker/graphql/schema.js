@@ -6,6 +6,7 @@ const typeDefs = gql`
     user(username: String!): User
     me: User
     posts: [Post!]!
+    preview(url: String!): Preview!
   }
   type Mutation {
     submitPost(
@@ -14,9 +15,6 @@ const typeDefs = gql`
       lng: Float, 
       lat: Float, 
       url: String!
-      media_type: String,
-      content_type: String,
-      favicon: String,
     ): SubmitPostResponse!
   }
   type User {
@@ -38,6 +36,14 @@ const typeDefs = gql`
     success: Boolean!
     message: String
     postId: ID
+  }
+  type Preview {
+    url: String!
+    title: String
+    images: [String]
+    mediaType: String
+    contentType: String
+    favicons: [String]
   }
 `;
 
