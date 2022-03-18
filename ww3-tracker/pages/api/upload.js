@@ -18,8 +18,6 @@ apiRoute.use(upload.single('theFiles'));
 
 // Process a POST request
 apiRoute.post(async (req, res) => {
-  const crypto = await import('crypto');
-  // const url = "http://some-link.com/" + crypto.randomUUID();
   console.log(req.file, req.body)
   const url = await uploadFile(req.file);
   console.log("url " + url);

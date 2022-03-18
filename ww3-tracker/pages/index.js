@@ -6,6 +6,7 @@ import SubmitContent from './components/content/submitContent'
 import Map from './components/map/map'
 import { mapPoints } from '../utils/testData'
 import { useQuery, gql } from '@apollo/client';
+import ContentView from './components/content/contentView';
 
 // #191919
 // #2D4263
@@ -34,7 +35,7 @@ export default function Index() {
     const [selectedCoords, setSelectedCoords] = useState(null);
     const [points, setPoints] = useState([]);
     
-    const { loading, error, data } = useQuery(GET_POSTS);
+    const { loading, error, data, refetch } = useQuery(GET_POSTS);
 
     useEffect(() => {
         setUsername(getCookie("username"));
@@ -120,11 +121,11 @@ export default function Index() {
                             <Stack direction="column" style={{ backgroundColor: 'red', width: '40%', height: '100%' }}>
                                 <h3>Recent posts</h3>
                                 <Box style={{ height: '65vh', backgroundColor: 'lightblue' }}>
-                                    placeholder
+                                    <ContentView />
                                 </Box>
                             </Stack>
                         </Stack>
-                        <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false) }} coords={selectedCoords} />
+                        <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false); refetch(); }} coords={selectedCoords} />
 
 
 

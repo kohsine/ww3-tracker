@@ -14,5 +14,5 @@ CREATE TABLE public.posts (
   lng DECIMAL,
   lat DECIMAL,
   author TEXT REFERENCES users,
-  url TEXT UNIQUE
+  url TEXT
 );

@@ -12,7 +12,7 @@ export default async function uploadFile(file) {
 
     const params = {
         Bucket: process.env.AWS_BUCKET,
-        Key: file.originalname,
+        Key: Date.now() + '-' + file.originalname,
         Body: file.buffer,
         ACL: 'public-read',
         ContentType: file.mimetype
