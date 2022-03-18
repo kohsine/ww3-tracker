@@ -5,8 +5,8 @@ export const Query = {
 };
 
 export const Mutation = {
-  submitPost: async (_, { title, description, lng, lat, url }, { dataSources, user }) => {
-    const submitPostResponse = await dataSources.postAPI.submitPost({ title, description, lng, lat, url, user });
+  submitPost: async (_, args, { dataSources, user }) => {
+    const submitPostResponse = await dataSources.postAPI.submitPost({ ...args, user });
     return submitPostResponse;
   },
 }

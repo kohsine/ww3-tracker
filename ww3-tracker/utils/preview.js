@@ -1,4 +1,3 @@
-import grabity from "grabity";
 import videoExtensions from "video-extensions";
 import imageExtensions from "image-extensions";
 
@@ -30,7 +29,6 @@ export default async function getMediaPreview(url) {
         }
     }
 
-    const { data } = await grabity.get(url);
     return {
         ...data,
         type: "img"

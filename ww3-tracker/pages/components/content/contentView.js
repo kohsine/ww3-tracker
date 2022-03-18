@@ -1,15 +1,14 @@
-import { Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
+import { Card, CardActions, CardContent, CardMedia, Typography, Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import getMediaPreview from '../../../utils/preview';
 
 export default function ContentView(props) {
     const [preview, setPreview] = useState({});
 
-    useEffect(() => {
+    /* useEffect(() => {
         getMediaPreview(props.url).then(preview => {
             setPreview(preview);
         });
-    }, [props.url]);
+    }, [props.url]); */
     
     return (
         <Card>

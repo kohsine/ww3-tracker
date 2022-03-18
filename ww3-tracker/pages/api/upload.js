@@ -1,6 +1,7 @@
 import nextConnect from 'next-connect';
 import multer from 'multer';
 import uploadFile from '../../utils/s3';
+import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
 
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
@@ -21,8 +22,10 @@ apiRoute.post(async (req, res) => {
   console.log(req.file, req.body)
   const url = await uploadFile(req.file);
   console.log("url " + url);
+  const url_meta = await getLinkPreview(url);
+  console.debug(url_meta);
 
-  res.status(200).json({ data: 'success', url });
+  res.status(200).json({ data: 'success', url_meta });
 });
 
 export default apiRoute;

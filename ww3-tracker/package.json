@@ -4,7 +4,9 @@
     "dev": "docker-compose --env-file ./.env up -d  && next",
     "dev1": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "db-reset": "docker-compose down && docker volume prune --force && docker-compose build",
+    "db-start": "docker-compose up"
   },
   "dependencies": {
     "@apollo/client": "^3.5.10",
@@ -17,11 +19,11 @@
     "cookies-next": "^2.0.4",
     "fs": "0.0.1-security",
     "google-map-react": "^2.1.10",
-    "grabity": "^1.0.5",
     "graphql": "^15.5.1",
     "graphql-request": "^4.1.0",
     "image-extensions": "^1.1.0",
     "jsonwebtoken": "^8.5.1",
+    "link-preview-js": "^2.1.13",
     "micro": "^9.3.4",
     "multer": "^1.4.4",
     "next": "latest",

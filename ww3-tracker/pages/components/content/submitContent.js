@@ -8,10 +8,11 @@ const Input = styled('input')({
 });
 
 export const SUBMIT_POST = gql`
-  mutation Mutation($title: String!, $url: String!, $description: String, $lng: Float, $lat: Float) {
-    submitPost(title: $title, url: $url, description: $description, lng: $lng, lat: $lat) {
+  mutation Mutation($title: String!, $url: String!, $description: String, $lng: Float, $lat: Float, $mediaType: String, $contentType: String, $favicon: String) {
+    submitPost(title: $title, url: $url, description: $description, lng: $lng, lat: $lat, media_type: $mediaType, content_type: $contentType, favicon: $favicon) {
       success
       message
+      postId
     }
   }
 `;
@@ -41,24 +42,35 @@ export default function SubmitContent(props) {
     }, [coords])
 
     async function submit() {
-        setDisabled(true);
-        let fileUrl;
-        if (mediaType === 0) {
-            const fileData = new FormData();
-            fileData.append('theFiles', file);
-            fileUrl = await submitFile(fileData);
-        }
+      setDisabled(true);
+      let url_meta;
+      if (mediaType === 0) {
+        const fileData = new FormData();
+        fileData.append('theFiles', file);
+        ({ url_meta } = await submitFile(fileData));
+        console.log("url meta " + JSON.stringify(url_meta));
+      }
 
-        const res = await submitPost({ variables: { title, url: mediaType === 0 ? fileUrl : url, description, lng: parseFloat(lng), lat: parseFloat(lat) } });
-        setDisabled(false);
-        console.log("res " + JSON.stringify(res));
+      const res = await submitPost({ 
+        variables: { 
+          title, 
+          url: mediaType === 0 ? url_meta.url : url, 
+          description, 
+          lng: parseFloat(lng), 
+          lat: parseFloat(lat), 
+          mediaType: url_meta.mediaType,
+          contentType: url_meta.contentType,
+          favicon: url_meta.favicons[0]
+        } 
+      });
+      setDisabled(false);
 
-        setFile("");
-        setTitle("");
-        setDescription("");
-        setLat("");
-        setLng("");
-        setUrl("");
+      setFile("");
+      setTitle("");
+      setDescription("");
+      setLat("");
+      setLng("");
+      setUrl("");
     }
 
     const submitFile = async (formData) => {
@@ -73,7 +85,7 @@ export default function SubmitContent(props) {
         const response = await axios.post('/api/upload', formData, config);
 
         console.log('response', response.data);
-        return response.data.url;
+        return response.data;
     };
 
     return <Dialog open={open} onClose={onClose}>

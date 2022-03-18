@@ -14,6 +14,9 @@ const typeDefs = gql`
       lng: Float, 
       lat: Float, 
       url: String!
+      media_type: String,
+      content_type: String,
+      favicon: String,
     ): SubmitPostResponse!
   }
   type User {
@@ -27,11 +30,14 @@ const typeDefs = gql`
     lat: Float
     author: User!
     url: String!
+    media_type: String
+    content_type: String
+    favicon: String
   }
   type SubmitPostResponse {
     success: Boolean!
     message: String
-    postId: ID!
+    postId: ID
   }
 `;
 

@@ -15,6 +15,9 @@ CREATE TABLE public.posts (
   lat DECIMAL,
   author TEXT REFERENCES users,
   url TEXT,
+  media_type TEXT,
+  content_type TEXT,
+  favicon TEXT,
   created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
