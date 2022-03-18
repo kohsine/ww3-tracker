@@ -1,45 +1,66 @@
-import useSWR from 'swr'
-import Login from './auth/login'
-import { fetcher } from '../utils/fetcher'
 import { Box, Container, TextField, Stack, Button } from '@mui/material'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from "react";
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next';
 import SubmitContent from './components/content/submitContent'
 import Map from './components/map/map'
-import { UiFileInputButton } from './components/upload/UiFileInputButton'
+import { mapPoints } from '../utils/testData'
+import { useQuery, gql } from '@apollo/client';
 
 // #191919
 // #2D4263
 // #C84B31
 // #ECDBBA
 
+const GET_POSTS = gql`
+    query {
+        posts {
+            id
+            title
+            description
+            lng
+            lat
+            url
+            author {
+                username
+            }
+        }
+    }
+`;
+
 export default function Index() {
     const [username, setUsername] = useState(null);
     const [createIsOpen, setCreateIsOpen] = useState(false);
     const [selectedCoords, setSelectedCoords] = useState(null);
+    const [points, setPoints] = useState([]);
+    
+    const { loading, error, data } = useQuery(GET_POSTS);
 
-    useEffect(() => setUsername(getCookie("username")), []);
+    useEffect(() => {
+        setUsername(getCookie("username"));
+    }, []);
+
+    useEffect(() => {
+        if (data) {
+            const posts = data.posts;
+            const pts = posts.map(post => (
+                {
+                    properties: post,
+                    geometry: {
+                        type: "Point",
+                        coordinates: [post.lng, post.lat]
+                    }
+                }
+            ));
+            setPoints(pts);
+        }
+    }, [data]);
 
     const signoutHandler = () => {
         removeCookies('username');
         removeCookies('token');
         setUsername(undefined);
     }
-
-    const onChangeFile = async (formData) => {
-      const axios = require('axios');
-      const config = {
-        headers: { 'content-type': 'multipart/form-data' },
-        onUploadProgress: (event) => {
-          console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
-        },
-      };
-  
-      const response = await axios.post('/api/upload', formData, config);
-  
-      console.log('response', response.data);
-    };
 
     const router = useRouter();
 
@@ -93,7 +114,7 @@ export default function Index() {
                                     Create New Post
                                 </Button>
 
-                                <Map style={{ width: '100%', height: '65vh', position: 'relative' }} onMapClick={setSelectedCoords}/>
+                                <Map style={{ width: '100%', height: '65vh', position: 'relative' }} onMapClick={setSelectedCoords} points={points} />
 
                             </Stack>
                             <Stack direction="column" style={{ backgroundColor: 'red', width: '40%', height: '100%' }}>
@@ -103,7 +124,7 @@ export default function Index() {
                                 </Box>
                             </Stack>
                         </Stack>
-                        <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false) }} coords={selectedCoords}/>
+                        <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false) }} coords={selectedCoords} />
 
 
 

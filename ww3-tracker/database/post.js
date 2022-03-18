@@ -9,7 +9,7 @@ class PostAPI {
       id: post.id,
       title: post.title,
       description: post.description,
-      lon: post.lon,
+      lng: post.lng,
       lat: post.lat,
       url: post.url,
       author: {
@@ -34,7 +34,7 @@ class PostAPI {
     }
   }
 
-  async submitPost({ title, description, lon, lat, url, user }) {
+  async submitPost({ title, description, lng, lat, url, user }) {
     const username = getCookie('username');
     console.log("username " + user);
     console.log("title " + title);

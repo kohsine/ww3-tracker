@@ -11,7 +11,7 @@ CREATE TABLE public.posts (
   id SERIAL PRIMARY KEY,
   title TEXT,
   description TEXT,
-  lon DECIMAL,
+  lng DECIMAL,
   lat DECIMAL,
   author TEXT REFERENCES users,
   url TEXT UNIQUE

@@ -1,11 +1,8 @@
 export const mapPoints = [
     {
-        "type": "Feature",
+        // "type": "Feature",
         "properties": {
             "name": "Москва",
-            "description": "Москва",
-            "marker-color": "#ff0000",
-            "marker-size": "medium",
         },
         "geometry": {
             "type": "Point",
@@ -16,12 +13,9 @@ export const mapPoints = [
         }
     },
     {
-        "type": "Feature",
+        // "type": "Feature",
         "properties": {
             "name": "Санкт-Петербург",
-            "description": "Санкт-Петербург",
-            "marker-color": "#ff0000",
-            "marker-size": "medium",
         },
         "geometry": {
             "type": "Point",
@@ -32,12 +26,9 @@ export const mapPoints = [
         },
     },
     {
-        "type": "Feature",
+        // "type": "Feature",
         "properties": {
             "name": "Казань",
-            "description": "Казань",
-            "marker-color": "#ff0000",
-            "marker-size": "medium",
         },
         "geometry": {
             "type": "Point",

@@ -11,7 +11,7 @@ const typeDefs = gql`
     submitPost(
       title: String!, 
       description: String, 
-      lon: Float, 
+      lng: Float, 
       lat: Float, 
       url: String!
     ): SubmitPostResponse!
@@ -23,7 +23,7 @@ const typeDefs = gql`
     id: ID!
     title: String!
     description: String
-    lon: Float
+    lng: Float
     lat: Float
     author: User!
     url: String!

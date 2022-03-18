@@ -9,8 +9,8 @@ const Input = styled('input')({
 });
 
 export const SUBMIT_POST = gql`
-  mutation Mutation($title: String!, $url: String!, $description: String, $lon: Float, $lat: Float) {
-    submitPost(title: $title, url: $url, description: $description, lon: $lon, lat: $lat) {
+  mutation Mutation($title: String!, $url: String!, $description: String, $lng: Float, $lat: Float) {
+    submitPost(title: $title, url: $url, description: $description, lng: $lng, lat: $lat) {
       success
       message
     }
@@ -25,7 +25,7 @@ export default function SubmitContent(props) {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [lat, setLat] = useState(200);
-    const [lon, setLon] = useState(200);
+    const [lng, setLng] = useState(200);
     const [url, setUrl] = useState('');
     const [mediaType, setMediaType] = useState(0);
     const [submitPost, { loading, error}] = useMutation(SUBMIT_POST);
@@ -39,10 +39,10 @@ export default function SubmitContent(props) {
     useEffect(() => {
         if (coords) {
             setLat(coords.lat)
-            setLon(coords.lng)
+            setLng(coords.lng)
         } else {
             setLat("")
-            setLon("")
+            setLng("")
         }
     }, [coords])
 
@@ -52,14 +52,14 @@ export default function SubmitContent(props) {
       const url = await submitFile(fileData);
       setUrl(url);
 
-      const res = await submitPost({ variables: { title, url, description, lon, lat } });
+      const res = await submitPost({ variables: { title, url, description, lng: lng, lat } });
       console.log("res " + JSON.stringify(res));
 
       setFile("");
       setTitle("");
       setDescription("");
       setLat("");
-      setLon("");
+      setLng("");
     }
 
     const submitFile = async (formData) => {
@@ -86,7 +86,7 @@ export default function SubmitContent(props) {
                 <TextField label="Title" required value={title} onChange={e => {setTitle(e.target.value)}}/>
                 <TextField label="Description" required value={description} onChange={e => {setDescription(e.target.value)}}/>
                 <TextField label="Lat" required value={lat} onChange={e => {setLat(parseFloat(e.target.value))}}/>
-                <TextField label="Lon" required value={lon} onChange={e => {setLon(parseFloat(e.target.value))}}/>
+                <TextField label="Lng" required value={lng} onChange={e => {setLng(parseFloat(e.target.value))}}/>
                 <Tabs value={mediaType} onChange={(e, v) => {setMediaType(v)}}>
                     <Tab label="file" {...a11yProps(0)}/>
                     <Tab label="url" {...a11yProps(1)}/>
