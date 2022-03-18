@@ -41,8 +41,8 @@ export default function SubmitContent(props) {
             setLat(coords.lat)
             setLon(coords.lng)
         } else {
-            setLat(0)
-            setLon(0)
+            setLat("")
+            setLon("")
         }
     }, [coords])
 
@@ -51,6 +51,8 @@ export default function SubmitContent(props) {
       fileData.append('theFiles', file);
       const url = await submitFile(fileData);
 
+      setLon(parseFloat(lon));
+      setLat(parseFloat(lat));
       const res = await submitPost({ variables: { title, url, description, lon, lat } });
       console.log("res " + JSON.stringify(res));
 
@@ -84,8 +86,8 @@ export default function SubmitContent(props) {
 
                 <TextField label="Title" required value={title} onChange={e => {setTitle(e.target.value)}}/>
                 <TextField label="Description" required value={description} onChange={e => {setDescription(e.target.value)}}/>
-                <TextField label="Lat" required value={lat} onChange={e => {setLat(parseFloat(e.target.value))}}/>
-                <TextField label="Lon" required value={lon} onChange={e => {setLon(parseFloat(e.target.value))}}/>
+                <TextField label="Lat" required value={lat} onChange={e => {setLat(e.target.value)}}/>
+                <TextField label="Lon" required value={lon} onChange={e => {setLon(e.target.value)}}/>
                 <Tabs value={mediaType} onChange={(e, v) => {setMediaType(v)}}>
                     <Tab label="file" {...a11yProps(0)}/>
                     <Tab label="url" {...a11yProps(1)}/>
