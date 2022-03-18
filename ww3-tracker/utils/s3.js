@@ -1,9 +1,9 @@
 import AWS from 'aws-sdk';
 
 AWS.config.update({
-    accessKeyId: process.env._AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env._AWS_SECRET_ACCESS_KEY,
-    region: process.env._AWS_REGION
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION
 })
 
 export default async function uploadFile(file) {
@@ -11,11 +11,11 @@ export default async function uploadFile(file) {
     const s3 = new AWS.S3();
 
     const params = {
-        Bucket: process.env._AWS_BUCKET,
-        Key: file.name,
-        Body: file,
+        Bucket: process.env.AWS_BUCKET,
+        Key: file.originalname,
+        Body: file.buffer,
         ACL: 'public-read',
-        ContentType: file.type
+        ContentType: file.mimetype
     };
 
     // returns url

@@ -24,8 +24,8 @@ export default function SubmitContent(props) {
     const [file, setFile] = useState("");
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [lat, setLat] = useState(200);
-    const [lon, setLon] = useState(200);
+    const [lat, setLat] = useState("");
+    const [lon, setLon] = useState("");
     const [url, setUrl] = useState('');
     const [mediaType, setMediaType] = useState(0);
     const [submitPost, { loading, error}] = useMutation(SUBMIT_POST);
@@ -41,8 +41,8 @@ export default function SubmitContent(props) {
             setLat(coords.lat)
             setLon(coords.lng)
         } else {
-            setLat("")
-            setLon("")
+            setLat(0)
+            setLon(0)
         }
     }, [coords])
 
@@ -50,7 +50,6 @@ export default function SubmitContent(props) {
       const fileData = new FormData();
       fileData.append('theFiles', file);
       const url = await submitFile(fileData);
-      setUrl(url);
 
       const res = await submitPost({ variables: { title, url, description, lon, lat } });
       console.log("res " + JSON.stringify(res));
