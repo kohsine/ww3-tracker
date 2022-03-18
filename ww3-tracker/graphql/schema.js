@@ -31,7 +31,7 @@ const typeDefs = gql`
   type SubmitPostResponse {
     success: Boolean!
     message: String
-    post: Post
+    postId: ID!
   }
 `;
 

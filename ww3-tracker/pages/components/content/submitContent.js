@@ -2,10 +2,20 @@ import { styled, Dialog, DialogTitle, DialogContent, DialogContentText, DialogAc
 import React, { useEffect, useState } from 'react'
 import { HiOutlineUpload } from 'react-icons/hi'
 import { UiFileInputButton } from '../upload/UiFileInputButton'
+import { gql, useMutation } from '@apollo/client';
 
 const Input = styled('input')({
     display: 'none',
 });
+
+export const SUBMIT_POST = gql`
+  mutation Mutation($title: String!, $url: String!, $description: String, $lon: Float, $lat: Float) {
+    submitPost(title: $title, url: $url, description: $description, lon: $lon, lat: $lat) {
+      success
+      message
+    }
+  }
+`;
 
 export default function SubmitContent(props) {
 
@@ -14,10 +24,11 @@ export default function SubmitContent(props) {
     const [file, setFile] = useState("");
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [lat, setLat] = useState("");
-    const [lng, setLng] = useState("");
+    const [lat, setLat] = useState(200);
+    const [lon, setLon] = useState(200);
     const [url, setUrl] = useState('');
     const [mediaType, setMediaType] = useState(0);
+    const [submitPost, { loading, error}] = useMutation(SUBMIT_POST);
 
     function handleChange(e) {
         if (e.target.files && e.target.files[0]) {
@@ -28,38 +39,27 @@ export default function SubmitContent(props) {
     useEffect(() => {
         if (coords) {
             setLat(coords.lat)
-            setLng(coords.lng)
+            setLon(coords.lng)
         } else {
             setLat("")
-            setLng("")
+            setLon("")
         }
     }, [coords])
 
     async function submit() {
-      const formData = new FormData();
-      formData.append('title', title)
-      formData.append('description', description)
-      formData.append('lat', lat)
-      formData.append('lng', lng)
-      if (mediaType === 1) {
-        formData.append('url', url)
-      } else {
-        formData.append('file', file)
-      }
-      // TODO
-      for (let i of formData.values()) {
-        console.log(i)
-      }
-
       const fileData = new FormData();
       fileData.append('theFiles', file);
       const url = await submitFile(fileData);
-      console.log("url " + url);
+      setUrl(url);
+
+      const res = await submitPost({ variables: { title, url, description, lon, lat } });
+      console.log("res " + JSON.stringify(res));
+
       setFile("");
       setTitle("");
       setDescription("");
       setLat("");
-      setLng("");
+      setLon("");
     }
 
     const submitFile = async (formData) => {
@@ -85,8 +85,8 @@ export default function SubmitContent(props) {
 
                 <TextField label="Title" required value={title} onChange={e => {setTitle(e.target.value)}}/>
                 <TextField label="Description" required value={description} onChange={e => {setDescription(e.target.value)}}/>
-                <TextField label="Lat" required value={lat} onChange={e => {setLat(e.target.value)}}/>
-                <TextField label="Lon" required value={lng} onChange={e => {setLng(e.target.value)}}/>
+                <TextField label="Lat" required value={lat} onChange={e => {setLat(parseFloat(e.target.value))}}/>
+                <TextField label="Lon" required value={lon} onChange={e => {setLon(parseFloat(e.target.value))}}/>
                 <Tabs value={mediaType} onChange={(e, v) => {setMediaType(v)}}>
                     <Tab label="file" {...a11yProps(0)}/>
                     <Tab label="url" {...a11yProps(1)}/>
