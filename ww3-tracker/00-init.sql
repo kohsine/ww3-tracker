@@ -14,5 +14,13 @@ CREATE TABLE public.posts (
   lng DECIMAL,
   lat DECIMAL,
   author TEXT REFERENCES users,
-  url TEXT
+  url TEXT,
+  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE public.comments (
+  id SERIAL PRIMARY KEY,
+  content TEXT,
+  author TEXT REFERENCES users,
+  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
