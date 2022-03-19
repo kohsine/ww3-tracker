@@ -15,7 +15,6 @@ class UserAPI {
   }
 
   async getUserByUsername({ username }) {
-    console.log("username " + username);
     return { username: username };
   }
 }

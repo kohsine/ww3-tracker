@@ -11,7 +11,8 @@ INSERT INTO public.posts (title, description, lng, lat, author, url) VALUES
 ('Wide Putin', 'Putin is wiiiiideee.', 37, 49, 'Lexius', 'http://google.com'),
 ('Ukrained being nuked', 'Description', 36, 51, 'Lexius', 'http://google.com1');
 
-INSERT INTO public.comments (content, author) VALUES
-('hello i am biggus dickus', 'Benjie'),
-('comment hnghhhhhhh', 'Lexius'),
-('interesting comment hollhjljlj', 'Benjie');
+INSERT INTO public.comments (content, author, postId) VALUES
+('hello i am biggus dickus', 'Benjie', 1),
+('comment hnghhhhhhh', 'Lexius', 2),
+('interesting comment hollhjljlj', 'Benjie', 3),
+('hello i am smol dickus', 'Benjie', 1);

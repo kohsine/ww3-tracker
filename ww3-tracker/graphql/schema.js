@@ -6,7 +6,9 @@ const typeDefs = gql`
     user(username: String!): User
     me: User
     posts: [Post!]!
+    post(id: ID!): Post
     preview(url: String!): Preview!
+    comments: [Comment!]!
   }
   type Mutation {
     submitPost(
@@ -16,6 +18,11 @@ const typeDefs = gql`
       lat: Float, 
       url: String!
     ): SubmitPostResponse!
+
+    submitComment(
+      content: String!,
+      postId: ID!
+    ): SubmitCommentResponse!
   }
   type User {
     username: String!
@@ -28,9 +35,7 @@ const typeDefs = gql`
     lat: Float
     author: User!
     url: String!
-    media_type: String
-    content_type: String
-    favicon: String
+    comments: [Comment!]!
   }
   type SubmitPostResponse {
     success: Boolean!
@@ -44,6 +49,18 @@ const typeDefs = gql`
     mediaType: String
     contentType: String
     favicons: [String]
+  }
+  type Comment {
+    id: ID!
+    content: String!
+    author: User!
+    post: Post!
+    date: String!
+  }
+  type SubmitCommentResponse {
+    success: Boolean!
+    message: String
+    commentId: ID
   }
 `;
 

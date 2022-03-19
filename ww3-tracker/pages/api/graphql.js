@@ -1,13 +1,15 @@
 import { ApolloServer, gql } from 'apollo-server-micro'
 import UserAPI from '../../database/user'
 import PostAPI from '../../database/post';
+import CommentAPI from '../../database/comment';
 import typeDefs from '../../graphql/schema';
 
 const resolvers = require('../../graphql/resolvers');
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers, dataSources: () => ({
     userAPI: new UserAPI(),
-    postAPI: new PostAPI()
+    postAPI: new PostAPI(),
+    commentAPI: new CommentAPI()
   }),
   context: ({ req: MicroRequest, res: ServerResponse }) => {
     const user = MicroRequest.cookies.username;

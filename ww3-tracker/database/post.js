@@ -11,9 +11,7 @@ class PostAPI {
       lng: post.lng,
       lat: post.lat,
       url: post.url,
-      author: {
-        username: post.username
-      }
+      author: post.author
     };
   }
 
@@ -25,6 +23,21 @@ class PostAPI {
       return Promise.all(
         res.rows.map(post => this.postReducer(post)),
       );
+    } catch (e) {
+      console.error(e.stack)
+    } finally {
+      client.end()
+    }
+  }
+
+  async getPostById({ postId }) {
+    const text = 'SELECT * FROM posts WHERE id = $1;';
+    const values = [postId];
+    const client = new Client(pg_config)
+    client.connect()
+    try {
+      const res = await client.query(text, values);
+      return this.postReducer(res.rows[0]);
     } catch (e) {
       console.error(e.stack)
     } finally {

@@ -22,5 +22,6 @@ CREATE TABLE public.comments (
   id SERIAL PRIMARY KEY,
   content TEXT,
   author TEXT REFERENCES users,
+  postid INTEGER REFERENCES posts,
   created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
