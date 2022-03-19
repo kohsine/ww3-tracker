@@ -33,6 +33,7 @@ export default function Index() {
     const [username, setUsername] = useState(null);
     const [createIsOpen, setCreateIsOpen] = useState(false);
     const [selectedCoords, setSelectedCoords] = useState(null);
+    const [selectedPost, setSelectedPost] = useState(null);
     const [points, setPoints] = useState([]);
 
     const { loading, error, data, refetch } = useQuery(GET_POSTS);
@@ -115,13 +116,16 @@ export default function Index() {
                                     Create New Post
                                 </Button>
 
-                                <Map style={{ width: '100%', height: '65vh', position: 'relative' }} onMapClick={setSelectedCoords} points={points} />
+                                <Map style={{ width: '100%', height: '65vh', position: 'relative' }} onMapClick={setSelectedCoords} points={points} onMarkerClick={setSelectedPost} />
 
                             </Stack>
                             <Stack direction="column" style={{ backgroundColor: 'red', width: '40%', height: '100%' }}>
-                                <h3>Recent posts</h3>
+                                <h3>No post selected</h3>
                                 <Box style={{ height: '65vh', backgroundColor: 'lightblue' }}>
-                                    <ContentView />
+                                    {
+                                        selectedPost &&
+                                        <ContentView post={selectedPost} />
+                                    }
                                 </Box>
                             </Stack>
                         </Stack>
