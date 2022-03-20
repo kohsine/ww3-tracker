@@ -3,8 +3,8 @@ COPY 00-init.sql /docker-entrypoint-initdb.d/
 COPY 01-data.sql /docker-entrypoint-initdb.d/
 
 FROM node:16.9.0-alpine
-# WORKDIR /usr/src/app
+WORKDIR /app
 ENV PORT 80
-COPY . .
+COPY . /app
 RUN npm install
 CMD ["npm", "run", "start"]
