@@ -1,6 +1,7 @@
-import { Card, CardActions, CardContent, CardMedia, Typography, Button } from '@mui/material'
+import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, ButtonGroup, Stack } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
+import { BiUpvote, BiDownvote } from 'react-icons/bi'
 
 
 
@@ -40,17 +41,28 @@ export default function ContentView(props) {
                 }}
             />
             <CardContent>
-                <a href={props.post.url} target="_blank" style={{textDecoration: 'none'}}>
-                    <Typography gutterBottom variant="h5" >
-                        {props.post.title}
-                    </Typography>
-                </a>
+                <Stack direction={'row'} alignItems="center">
+                    <ButtonGroup variant="outlined" orientation="vertical">
+                        <IconButton>
+                            <BiUpvote />
+                        </IconButton>
+                        <IconButton>
+                            <BiDownvote />
+                        </IconButton>
+                    </ButtonGroup>
+
+                    <a href={props.post.url} target="_blank" style={{ textDecoration: 'none' }}>
+                        <Typography gutterBottom variant="h5" >
+                            {props.post.title}
+                        </Typography>
+                    </a>
+                </Stack>
                 <Typography variant="body2">
                     {props.post.description}
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button></Button>
+
             </CardActions>
         </Card>
     )
