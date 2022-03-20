@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Container, TextField, Stack, Button, Typography } from '@mui/material'
 import { login_query } from "../../utils/fetcher";
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next';
 import { useRouter } from 'next/router'
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 export default function Login(props) {
 
   const [formValues, setFormValues] = useState({username: "", password: ""});
   const [error, setError] = useState("");
+  const [disabled, setDisabled] = useState(true);
+  const [feedback, setFeedback] = useState("");
 
   const router = useRouter();
+
+  const zxcvbn = require('zxcvbn');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -18,6 +23,15 @@ export default function Login(props) {
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    console.log("password changes");
+    const result = zxcvbn(formValues.password);
+    console.log("password score " + result.score);
+    console.log("feedback " + JSON.stringify(result.feedback));
+    setDisabled(result.score > 2 ? false : true);
+    setFeedback(result.feedback.warning);
+  }, [formValues.password])
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
@@ -91,25 +105,26 @@ export default function Login(props) {
     router.push('/');
   }
 
-  return <>
-    <Box height="80vh" flexDirection="column" justifyContent="center" display="flex" alignItems="center">
-      <Typography component="h2">
-        {error}
-      </Typography>
+  return <Stack direction="row" justifyContent="space-evenly" alignItems="center" height={"100vh"}>
       <form onSubmit={handleLoginSubmit}>
-        <Stack spacing={2} direction="row" justifyContent="center" marginBottom="80px">
+        <Stack spacing={2} justifyContent="center">
+          <Typography variant="h5" align="center">Login</Typography>
           <TextField size="small" name="username" variant="filled" label="Username" onChange={handleInputChange} />
           <TextField size="small" name="password" variant="filled" label="Password" type="password" onChange={handleInputChange} />
-          <Button size="small" name="action" value="login" variant="text" type="submit">Login</Button>
+          <Button size="small" name="action" value="login" variant="outlined" type="submit">Login</Button>
         </Stack>
+        <Typography variant="h6">
+          {error}
+        </Typography>
       </form>
       <form onSubmit={handleSignupSubmit}>
-        <Stack spacing={2} direction="row" justifyContent="center" marginBottom="20px">
+        <Stack spacing={2} justifyContent="center">
+          <Typography variant="h5" align="center">Sign Up</Typography>
           <TextField size="small" name="username" variant="filled" label="Username" onChange={handleInputChange} />
           <TextField size="small" name="password" variant="filled" label="Password" type="password" onChange={handleInputChange} />
-          <Button size="small" ame="action" value="signup" variant="text" type="submit">Signup</Button>
+          <PasswordStrengthBar password={formValues.password} style={{margin: 0}}/>
+          <Button size="small" ame="action" value="signup" variant="contained" type="submit" disabled={disabled}>Signup</Button>
         </Stack>
       </form>
-    </Box>
-  </>
+    </Stack>
 }
