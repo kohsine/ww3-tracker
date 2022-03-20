@@ -1,0 +1,17 @@
+{
+  "name": "data-gen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.2.3",
+    "random-words": "^1.1.2",
+    "unsplash-js": "^7.0.15"
+  },
+  "type": "module"
+}

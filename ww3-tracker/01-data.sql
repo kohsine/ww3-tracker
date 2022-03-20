@@ -2,17 +2,70 @@
 
 /*Create some dummy users*/
 INSERT INTO public.users (username, pass) VALUES
-('Benjie', 'asdf'),
-('Singingwolfboy', 'asdff'),
-('Lexius', '1234');
+('jazminantoinette', 'password'),
+('izgubljenausvemiru', 'password'),
+('chrishcush', 'password'),
+('by_abigailkelly', 'password'),
+('peter_kp007', 'password'),
+('ayushk9', 'password'),
+('vercluka', 'password'),
+('nomadicfitlust', 'password'),
+('amr_taha', 'password'),
+('clementduguerre', 'password'),
+('pawel_czerwinski', 'password'),
+('enginakyurt', 'password'),
+('beneaton7', 'password'),
+('schimiggy', 'password'),
+('filmedbyfresh', 'password'),
+('tamofoto', 'password'),
+('matreding', 'password'),
+('spencerdavis', 'password'),
+('ja_domenech', 'password'),
+('rizkysabriansyah', 'password'),
+('jplenio', 'password'),
+('ggiqueaux', 'password'),
+('mak_jp', 'password'),
+('valentinlacoste', 'password'),
+('nottainenoble', 'password'),
+('noahheaps1', 'password'),
+('hybridstorytellers', 'password'),
+('dreamcatchlight', 'password'),
+('byfoul', 'password');
 
 INSERT INTO public.posts (title, description, lng, lat, author, url) VALUES
-('title', 'description', 35, 50, 'Benjie', 'link'),
-('Wide Putin', 'Putin is wiiiiideee.', 37, 49, 'Lexius', 'http://google.com'),
-('Ukrained being nuked', 'Description', 36, 51, 'Lexius', 'http://google.com1');
+('further private nervous machinery gone brother firm melted', 'train listen kept command ride change consist situation found though answer pass felt pony effect middle folks motion unusual appearance business climb catch stock square grandfather', 143.31653951090618, 55.75824292801633, 'jazminantoinette', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1497193100219-898d1032b664'),
+('pot poem tongue', 'Cracked Coconut background, close up image', -174.29267699462605, 47.468729518524725, 'izgubljenausvemiru', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1588413336022-43f5326d33b4'),
+('noted cotton fog name', 'truck than done instant paint like stop fifth noise palace chance dark brown excited proper classroom lady upon evidence direction now climate only classroom foot journey back you poet cap', -85.175012, 35.095384, 'chrishcush', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1628295930588-80c8f2eb4098'),
+('him sail function perhaps limited guide can picture driven pull', 'rice region caught these along hope species probably duck grain continent gulf throughout mixture star acres moment start that earth victory cast shake clean group mother solid strip then writing stared before vast', -18.588886083279647, -47.38730265539408, 'by_abigailkelly', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1628520381718-220759f5fafe'),
+('indicate not successful recognize', 'Make up ', -121.49367, 38.581583, 'peter_kp007', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1643185450492-6ba77dea00f6'),
+('tie band giant tobacco ruler stage correct orbit folks thus', 'with slabs nervous take mother essential hospital underline toward month turn bear mark protection present car zulu immediately smaller man wheat brother dark paper dull tell of owner origin smoke burn route comfortable carried catch bridge pitch have equal as fought seeing terrible certain blood choice paid refused he number', 94.78039242825793, -9.101140057556904, 'ayushk9', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1645389776527-43c47e909550'),
+('paid willing leaf', 'Beautiful landscape in Italia', -27.402439106269327, -80.92087071527664, 'vercluka', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1645546130054-f30347800c06'),
+('whenever park easy generally compare mud tower bread source weather', 'https://nomadicfitlust.darkroom.tech/', -137.298067134576, -80.9681889683462, 'nomadicfitlust', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1645714580244-6cd803815583'),
+('rocket ill riding machinery', 'wealth tune her national not value example log cool exclaimed getting tie well fuel wolf organized spin section connected station birth run hot measure rest loss per famous log dinner voice unusual lesson vote just subject struck said', 90.84048341423255, 21.719110224022828, 'amr_taha', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1645823814380-9c47abcbd613'),
+('dot favorite great frog silk', 'settle horse pilot nearer however pond color minerals class thin visit sheep must manner hill throw action that fur three clearly truck long pole below business brain addition drove under teach bone foreign cage fix type law draw cast longer increase mouth nearby football everybody longer dangerous declared zoo', 2.213749, 46.227638, 'clementduguerre', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1645905020243-d1d9b784137a'),
+('neighborhood loose quietly actually', '3D render (Blender 3.0)', -76.3812487458467, -64.65586201237531, 'pawel_czerwinski', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1645969235842-1b32224d9703'),
+('buy lesson managed', 'beautiful seascape and romantic sunset background', -98.65457653305539, -67.79925618591733, 'enginakyurt', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1646060201405-5a71c442c6c5'),
+('boy across handle settlers being telephone', 'Skateboarding in Miami', -80.19179, 25.76168, 'beneaton7', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1646175026008-f049476f4e90'),
+('cause as silk individual affect', 'Traditional yarn dyeing in Chinchero, Peru', -72.051429, -13.396403, 'schimiggy', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1646282994817-1f1949198d2a'),
+('sudden donkey must plate save order', 'tail triangle lost highway threw place money scared differ contain sort out anybody voice discovery bit wrote forgot symbol face who decide steady consider birds worried invented sink substance particles free your beauty library curious visit skin definition crop plates pretty open repeat', 31.47749078782107, 72.85471380734833, 'filmedbyfresh', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1646540957656-07591f2b2ce5'),
+('clean hunter morning being arrive slave company under first center', 'noted voice rather myself everyone spend child grain fifteen shallow condition desert women gone discovery tin bush population parts rod skin break several mother now vowel red half story pool everywhere done tears previous plenty border frog knew invented location mill advice neck shout afternoon bare', 173.49476197643384, 83.50577139788018, 'tamofoto', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1646603334539-eb62fcebed92'),
+('herd correctly good bush mission then him ground', 'price city bread dot nearly thrown perfectly soft face camp pencil metal education favorite cover', 176.36869699251395, 57.726118700387474, 'matreding', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1646646851983-4da2667217d7'),
+('loud no clothes took worse wonderful pale', 'Bedouin’s in Wadi Rum', 35.4358102, 29.6227697, 'spencerdavis', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1646734710313-3e64ba87722e'),
+('major join eaten sheep', 'Color dinner ', -86.8256511, 21.161314, 'ja_domenech', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1646864523896-8693c802fe5b'),
+('though company chief tank term small bow is be library', 'symbol what love late mill pretty call nearby rays melted moving swept handle upward pretty tales frame coal', 112.70954190996054, 8.812439780067422, 'rizkysabriansyah', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1646936218453-67fb48e50eb5'),
+('loose large least sugar short sale', 'depth market brown you electricity hole nice of support lake graph show luck upon teach carried rough last film white cover combine expect compare suit powder horse be pig organization aside class even difference carried letter zebra smooth fell slave mainly seat upper luck', -150.66969984685983, -25.927880409978826, 'matreding', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1646942463821-1b4be429980b'),
+('source journey audience equally according weight ball dinner', 'region bad forward speech today wrong policeman dot tried surrounded cover electricity read equipment green farther double lift poetry help brick father powder solid settlers nice series hung attached religious tell direction stepped breathing', 118.35893638265657, -10.135365146768507, 'jplenio', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1646987628143-eede7dee2980'),
+('success alphabet cake once speak can symbol engine popular', 'was dinner experiment sight escape nuts area headed eventually return beauty shinning upper flower replied composed pocket', 37.91982992476608, -56.59267706831206, 'ggiqueaux', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1647052970174-47cea3460699'),
+('knowledge mark range statement guess star never', 'aside western loud cat missing taken apartment watch particularly', 27.567571655711987, -4.197947850915995, 'mak_jp', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1647213053029-403d5fca54a1'),
+('farmer fort solution', 'answer vast stomach century probably silly especially dish more steady part party shirt kind deeply variety mad zero region caught breath bend equator ear fifth', 11.323067516432758, -70.12264752284158, 'valentinlacoste', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1647250725635-3f40aeaa2b9e'),
+('scared tightly sides crop making differ way', 'also entire ice slept balloon example perfect of contain older think cold habit every vast fallen six safe couple changing got joined win wish dog hello than mighty mission rhyme hundred shinning rear coat steady', 4.904139, 52.367573, 'nottainenoble', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1647257660168-be7446095482'),
+('cross bound if', 'obtain it iron told goes', 34.64303086414151, 84.6600703237333, 'noahheaps1', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1647311955462-d4e8a725e5c9'),
+('horse vast pipe equipment mile route shorter', 'breathe youth effort shoe everybody five forth parent setting', -79.995886, 40.440625, 'hybridstorytellers', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1647403352872-8cab902fe18d'),
+('pack during wagon specific evening tip establish', 'clearly late fuel figure did leg lips society guide each barn religious each slabs right dirt loose powerful thing that growth oldest snake indeed porch other surrounded bush nothing electricity private natural zoo aid', 88.60122874745275, 79.01168267436859, 'dreamcatchlight', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1647470226350-df0050ca1979'),
+('catch guide traffic tales clock cloth taught temperature continued', 'front topic musical trip gold heat figure arrangement butter cap bad creature yourself rice am bigger missing express situation failed life gulf chain section package throughout seven fat wherever pile progress anyone bat', 9.226010205972955, 72.69443987859941, 'byfoul', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/small/photo-1647481691386-d2a60ad03eb1');
 
-INSERT INTO public.comments (content, author, postId) VALUES
+/*INSERT INTO public.comments (content, author, postId) VALUES
 ('hello i am biggus dickus', 'Benjie', 1),
 ('comment hnghhhhhhh', 'Lexius', 2),
 ('interesting comment hollhjljlj', 'Benjie', 3),
-('hello i am smol dickus', 'Benjie', 1);
+('hello i am smol dickus', 'Benjie', 1); */

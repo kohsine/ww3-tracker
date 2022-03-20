@@ -30,7 +30,6 @@
     "next": "latest",
     "next-connect": "^0.12.2",
     "pg": "^8.7.3",
-    "postgraphile": "^4.12.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
