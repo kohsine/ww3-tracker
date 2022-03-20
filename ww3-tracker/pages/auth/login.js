@@ -29,9 +29,9 @@ export default function Login(props) {
     const result = zxcvbn(formValues.password);
     console.log("password score " + result.score);
     console.log("feedback " + JSON.stringify(result.feedback));
-    setDisabled(result.score > 2 ? false : true);
+    setDisabled(result.score > 1 && formValues.username.length > 0 ? false : true);
     setFeedback(result.feedback.warning);
-  }, [formValues.password])
+  }, [formValues.password, formValues.username])
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
@@ -71,6 +71,11 @@ export default function Login(props) {
 
   const handleSignupSubmit = async (event) => {
     event.preventDefault();
+    const result = zxcvbn(formValues.password);
+    if (result.score <= 1) {
+      setError("Password is too weak.");
+      return;
+    }
     console.log(formValues);
     const form_username = event.currentTarget.username.value;
     console.log("form username " + form_username);
@@ -90,15 +95,9 @@ export default function Login(props) {
     console.log("username " + username);
     console.log("status " + res.status);
 
-    if (res.status == 400) {
-      console.log("Empty password.");
-      setError("Empty password.")
-      return;
-    }
-
-    if (res.status == 409) {
-      console.log("username already exists.");
-      setError("username already exists.")
+    if (res.status != 200) {
+      console.log(body.error);
+      setError(body.error);
       return;
     }
 
@@ -113,17 +112,15 @@ export default function Login(props) {
           <TextField size="small" name="password" variant="filled" label="Password" type="password" onChange={handleInputChange} />
           <Button size="small" name="action" value="login" variant="outlined" type="submit">Login</Button>
         </Stack>
-        <Typography variant="h6">
-          {error}
-        </Typography>
       </form>
       <form onSubmit={handleSignupSubmit}>
         <Stack spacing={2} justifyContent="center">
           <Typography variant="h5" align="center">Sign Up</Typography>
+          <Typography variant="subtitle1">{error}</Typography>
           <TextField size="small" name="username" variant="filled" label="Username" onChange={handleInputChange} />
           <TextField size="small" name="password" variant="filled" label="Password" type="password" onChange={handleInputChange} />
           <PasswordStrengthBar password={formValues.password} style={{margin: 0}}/>
-          <Button size="small" ame="action" value="signup" variant="contained" type="submit" disabled={disabled}>Signup</Button>
+          <Button size="small" ame="action" value="signup" variant="contained" type="submit">Signup</Button>
         </Stack>
       </form>
     </Stack>

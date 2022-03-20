@@ -26,7 +26,6 @@ export default function ContentView(props) {
     useEffect(() => {
         if (data) {
             setPreview(data.preview);
-            console.log("data preview " + JSON.stringify(data.preview));
         }
     }, [data]);
 
@@ -36,7 +35,7 @@ export default function ContentView(props) {
                 component={'img'}
                 alt={'No preview available'}
                 height="35%"
-                src={preview.images && preview.images.length > 0 ? preview.images[0] : preview.url}
+                src={preview.images?.length > 0 ? preview.images[0] : preview.url}
                 onClick={() => {
                     window.open(props.post.url, '_blank');
                 }}

@@ -4,6 +4,8 @@ import MapMarker from './marker';
 import useSupercluster from 'use-supercluster';
 import { ukrainePoly } from './ukraine-poly-reduced';
 import { Button } from '@mui/material';
+import Marker from './marker';
+import SelectMarker from './select_marker';
 
 /**
  * Much of this code is taken from the example at https://www.leighhalliday.com/google-maps-clustering
@@ -99,12 +101,13 @@ export default function Map(props) {
 
                 {
                     clickMarker &&
-                    <MapMarker
+                    <SelectMarker
                         lat={clickMarker.lat}
                         lng={clickMarker.lng}
                         style={{ ...pointStyle, pointerEvents: 'none' }}
                         size={36}
                         color={'#2D4263'}
+                        text={""}
                     />
                 }
 
@@ -134,18 +137,19 @@ export default function Map(props) {
                         );
                     }
                     return (
-                        <MapMarker
-                            key={cluster.properties.name}
+                        <Marker
+                            key={latitude + longitude}
                             lat={latitude}
                             lng={longitude}
                             style={pointStyle}
                             size={36}
                             color={'#fa2020'}
                             onClick={() => onMarkerClick(cluster.properties)}
-                        />
+                            text={""}
+                    />
                     );
                 })
-                }
+              }
 
 
             </GoogleMapReact>
