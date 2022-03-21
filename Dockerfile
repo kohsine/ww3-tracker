@@ -8,4 +8,4 @@ ENV PORT 80
 EXPOSE 80
 COPY . /next-app
 RUN npm install
-CMD ["npm", "run", "dev1"]
+CMD ["npm", "run", "dev1"] 
