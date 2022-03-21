@@ -4,7 +4,7 @@ COPY 01-data.sql /docker-entrypoint-initdb.d/
 
 FROM alpine
 
-COPY --from=library/docker:1.29.0 /usr/local/bin/docker /usr/bin/docker
+COPY --from=library/docker:latest /usr/local/bin/docker /usr/bin/docker
 COPY --from=docker/compose:1.29.0 /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 FROM node:16
