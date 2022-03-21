@@ -1,10 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "dev": "docker-compose --env-file ./.env up -d  && next",
+    "dev": "docker-compose --env-file ./.env up -d  && next -p 80",
     "dev1": "next",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 80",
     "db-reset": "docker-compose down && docker volume prune --force && docker-compose build",
     "db-start": "docker-compose up"
   },
