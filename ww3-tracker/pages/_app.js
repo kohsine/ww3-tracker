@@ -12,7 +12,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:3000/api/graphql',
+  uri: 'http://localhost:80/api/graphql',
   cache: new InMemoryCache()
 });
 
