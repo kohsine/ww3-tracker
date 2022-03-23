@@ -4,7 +4,7 @@ import randomWords from 'random-words'
 import * as fs from 'fs';
 
 const unsplash = createApi({
-  accessKey: '_hntH490mG9M30Bj-BSBaAUQ3UbxRjKK41I4-_rA0YM',
+  accessKey: process.env.UNSPLASH_KEY,
   fetch: nodeFetch,
 });
 
