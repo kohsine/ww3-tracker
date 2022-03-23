@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "docker-compose --env-file ./.env up -d  && next",
+    "dev": "docker-compose --env-file ./.env up -d  && next -p 80",
     "dev1": "next",
     "build": "next build",
     "start": "next start",
