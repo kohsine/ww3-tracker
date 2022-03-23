@@ -6,6 +6,7 @@ import { ukrainePoly } from './ukraine-poly-reduced';
 import { Button } from '@mui/material';
 import Marker from './marker';
 import SelectMarker from './select_marker';
+import ClusterMarker from './cluster_marker';
 
 /**
  * Much of this code is taken from the example at https://www.leighhalliday.com/google-maps-clustering
@@ -118,11 +119,11 @@ export default function Map(props) {
 
                     if (isCluster) {
                         return (
-                            <div
-                                key={cluster.name}
+                            <ClusterMarker
+                                key={latitude + longitude}
                                 lat={latitude}
                                 lng={longitude}
-                                style={clusterStyle}
+                                pointCount={pointCount}
                                 onClick={() => {
                                     const expansionZoom = Math.min(
                                         supercluster.getClusterExpansionZoom(cluster.id),
@@ -131,9 +132,7 @@ export default function Map(props) {
                                     mapRef.current.setZoom(expansionZoom);
                                     mapRef.current.panTo({ lat: latitude, lng: longitude });
                                 }}
-                            >
-                                {pointCount}
-                            </div>
+                            />
                         );
                     }
                     return (
