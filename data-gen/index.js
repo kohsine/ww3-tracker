@@ -16,8 +16,8 @@ const reducer = (photo) => {
   return {
     title: randomWords({ min: 3, max: 10, join: ' ' }),
     description: photo.description || randomWords({ min: 3, max: 50, join: ' ' }),
-    lng: photo.location.position.longitude || getRandomArbitrary(-180, 180),
-    lat: photo.location.position.latitude || getRandomArbitrary(-90, 90),
+    lng: getRandomArbitrary(parseFloat(process.env.MIN_LNG), parseFloat(process.env.MAX_LNG)),
+    lat: getRandomArbitrary(parseFloat(process.env.MIN_LAT), parseFloat(process.env.MAX_LAT)),
     author: photo.user.username || randomWords({ min: 1, max: 1, join: ' '}),
     url: photo.urls.small_s3
   }
@@ -42,8 +42,6 @@ unsplash.photos.getRandom({ count: 500 }).then(result => {
     const authors = photos.map((photo) => photo.author);
     const uniq_authors = [...new Set(authors)];
     const uniq_authors_line = uniq_authors.map((author) => authorLineMapper(author));
-    console.log(uniq_authors);
-    console.log(photos);
     try {
       try {
         fs.unlinkSync('./photos.txt');

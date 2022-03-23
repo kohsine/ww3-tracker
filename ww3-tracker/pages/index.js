@@ -55,7 +55,7 @@ export default function Index() {
                     properties: post,
                     geometry: {
                         type: "Point",
-                        coordinates: [post.lng, post.lat]
+                        coordinates: [post.lat, post.lng]
                     }
                 }
             ));
