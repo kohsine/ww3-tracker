@@ -34,12 +34,17 @@ export default function Index() {
     const [createIsOpen, setCreateIsOpen] = useState(false);
     const [selectedCoords, setSelectedCoords] = useState(null);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [isPostVisible, setIsPostVisible] = useState('hidden');
     const [points, setPoints] = useState([]);
 
     const { loading, error, data, refetch } = useQuery(GET_POSTS);
 
     useEffect(() => {
-        setUsername(getCookie("username"));
+      const username = getCookie("username");
+      if (username) {
+        setUsername(username);
+        setIsPostVisible('visible');
+      }
     }, []);
 
     useEffect(() => {
@@ -112,7 +117,7 @@ export default function Index() {
                         <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} width="100%" style={{}}>
                             <Stack direction="column" width="50%" spacing={2}>
 
-                                <Button size="medium" id="create" variant="outlined" onClick={() => { setCreateIsOpen(true); }}>
+                                <Button size="medium" id="create" sx={{visibility: isPostVisible}} variant="outlined" onClick={() => { setCreateIsOpen(true); }}>
                                     Create New Post
                                 </Button>
 
