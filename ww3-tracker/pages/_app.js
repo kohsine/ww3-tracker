@@ -1,10 +1,11 @@
 // import App from 'next/app'
 import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql
+    ApolloClient,
+    InMemoryCache,
+    ApolloProvider,
+    useQuery,
+    gql,
+    createHttpLink
 } from "@apollo/client";
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -12,16 +13,19 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:80/api/graphql',
-  cache: new InMemoryCache()
+    //   uri: 'http://localhost:80/api/graphql',
+    link: createHttpLink({
+        uri: '/api/graphql',
+    }),
+    cache: new InMemoryCache()
 });
 
 function MyApp({ Component, pageProps }) {
-  return (
-    <ApolloProvider client={client}>
-      <Component {...pageProps} />
-    </ApolloProvider>
-  );
+    return (
+        <ApolloProvider client={client}>
+            <Component {...pageProps} />
+        </ApolloProvider>
+    );
 }
 
 // Only uncomment this method if you have blocking data requirements for
