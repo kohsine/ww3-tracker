@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Box, Container, TextField, Stack, Button, Typography } from '@mui/material'
-import { login_query } from "../../utils/fetcher";
-import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next';
+import React, { useState } from "react";
+import { TextField, Stack, Button, Typography } from '@mui/material'
+import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router'
-import PasswordStrengthBar from 'react-password-strength-bar';
 
 export default function Login(props) {
 
     const [formValues, setFormValues] = useState({ username: "", password: "" });
     const [error, setError] = useState("");
-    const [disabled, setDisabled] = useState(true);
-    const [feedback, setFeedback] = useState("");
 
     const router = useRouter();
-
-    const zxcvbn = require('zxcvbn');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -23,15 +17,6 @@ export default function Login(props) {
             [name]: value,
         });
     };
-
-    useEffect(() => {
-        console.log("password changes");
-        const result = zxcvbn(formValues.password);
-        console.log("password score " + result.score);
-        console.log("feedback " + JSON.stringify(result.feedback));
-        setDisabled(result.score > 1 && formValues.username.length > 0 ? false : true);
-        setFeedback(result.feedback.warning);
-    }, [formValues.password, formValues.username])
 
     const handleLoginSubmit = async (event) => {
         event.preventDefault();
@@ -71,11 +56,6 @@ export default function Login(props) {
 
     const handleSignupSubmit = async (event) => {
         event.preventDefault();
-        const result = zxcvbn(formValues.password);
-        if (result.score <= 1) {
-            setError("Password is too weak.");
-            return;
-        }
         console.log(formValues);
         const form_username = event.currentTarget.username.value;
         console.log("form username " + form_username);
@@ -131,7 +111,6 @@ export default function Login(props) {
                 <Typography variant="subtitle1">{error}</Typography>
                 <TextField size="small" name="username" variant="filled" label="Username" onChange={handleInputChange} sx={inputStyle} />
                 <TextField size="small" name="password" variant="filled" label="Password" type="password" onChange={handleInputChange} sx={inputStyle} />
-                <PasswordStrengthBar password={formValues.password} style={{ margin: 0 }} />
                 <Button size="small" ame="action" value="signup" variant="contained" type="submit">Signup</Button>
             </Stack>
         </form>
