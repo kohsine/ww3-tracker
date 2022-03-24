@@ -12,20 +12,6 @@ import ClusterMarker from './cluster_marker';
  * Much of this code is taken from the example at https://www.leighhalliday.com/google-maps-clustering
 **/
 
-const clusterStyle = {
-    color: "#fff",
-    background: "#a11b1b",
-    borderRadius: "50%",
-    padding: "10px",
-    width: "10px",
-    height: "10px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: "15px",
-    fontWeight: "900",
-}
-
 const pointStyle = {
     transform: "translate(-50%, -50%)",
 }
