@@ -30,7 +30,7 @@ export default function ContentView(props) {
     }, [data]);
 
     return (
-        <Card style={{ height: '100%', margin: '5px' }}>
+        <Card style={{ height: '100%', margin: '5px', width: '65vh'}}>
             <CardMedia
                 component={'img'}
                 alt={'No preview available'}
