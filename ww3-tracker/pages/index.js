@@ -40,11 +40,11 @@ export default function Index() {
     const { loading, error, data, refetch } = useQuery(GET_POSTS);
 
     useEffect(() => {
-      const username = getCookie("username");
-      if (username) {
-        setUsername(username);
-        setIsPostVisible('visible');
-      }
+        const username = getCookie("username");
+        if (username) {
+            setUsername(username);
+            setIsPostVisible('visible');
+        }
     }, []);
 
     useEffect(() => {
@@ -115,26 +115,40 @@ export default function Index() {
                         </Stack>
 
                         <Stack direction="row" justifyContent="center" alignItems="center" spacing={2} width="100%" style={{}}>
-                            <Stack direction="column" width="50%" spacing={2}>
+                            {
+                                username ? (
+                                    <>
 
-                                <Button size="medium" id="create" sx={{visibility: isPostVisible}} variant="outlined" onClick={() => { setCreateIsOpen(true); }}>
-                                    Create New Post
-                                </Button>
+                                        <Stack direction="column" width="50%" spacing={2}>
 
-                                <Map style={{ width: '100%', height: '65vh', position: 'relative' }} onMapClick={setSelectedCoords} points={points} onMarkerClick={setSelectedPost} />
+                                            <Button size="medium" id="create" sx={{ visibility: isPostVisible }} variant="outlined" onClick={() => { setCreateIsOpen(true); }}>
+                                                Create New Post
+                                            </Button>
 
-                            </Stack>
-                            <Stack direction="column" style={{ backgroundColor: 'red', width: '40%', height: '100%' }}>
-                                <h3>No post selected</h3>
-                                <Box style={{ height: '65vh', backgroundColor: 'lightblue' }}>
-                                    {
-                                        selectedPost &&
-                                        <ContentView post={selectedPost} />
-                                    }
-                                </Box>
-                            </Stack>
+                                            <Map style={{ width: '100%', height: '65vh', position: 'relative' }} onMapClick={setSelectedCoords} points={points} onMarkerClick={setSelectedPost} />
+
+                                        </Stack>
+                                        <Stack direction="column" style={{ backgroundColor: 'red', width: '40%', height: '100%' }}>
+                                            <h3>No post selected</h3>
+                                            <Box style={{ height: '65vh', backgroundColor: 'lightblue' }}>
+                                                {
+                                                    selectedPost &&
+                                                    <ContentView post={selectedPost} />
+                                                }
+                                            </Box>
+                                        </Stack>
+                                        <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false); refetch(); }} coords={selectedCoords} />
+                                    </>
+                                ) : (
+                                    <Stack direction="column" width="100%" spacing={2} alignItems="center" justifyContent={'center'} height="500px">
+                                        <h3 style={{ fontWeight: 200, color: "#ECDBBA" }}>Please login to see posts</h3>
+                                        <Button size="medium" id="gotoLogin" variant="outlined" onClick={() => { router.push("/auth/login"); }}>
+                                            Login
+                                        </Button>
+                                    </Stack>
+                                )
+                            }
                         </Stack>
-                        <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false); refetch(); }} coords={selectedCoords} />
 
 
 
