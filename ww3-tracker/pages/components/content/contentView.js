@@ -4,8 +4,6 @@ import { gql, useQuery } from '@apollo/client'
 import { BiUpvote, BiDownvote } from 'react-icons/bi'
 
 
-
-
 export default function ContentView(props) {
     const [preview, setPreview] = useState({});
 
@@ -34,7 +32,7 @@ export default function ContentView(props) {
             <CardMedia
                 component={'img'}
                 alt={'No preview available'}
-                height="35%"
+                height="50%"
                 src={preview.images?.length > 0 ? preview.images[0] : preview.url}
                 onClick={() => {
                     window.open(props.post.url, '_blank');
