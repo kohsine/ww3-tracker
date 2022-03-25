@@ -33,8 +33,8 @@ export default function SubmitContent(props) {
 
     useEffect(() => {
         if (coords) {
-            setLat(coords.lat)
-            setLng(coords.lng)
+            setLat(coords.lng)
+            setLng(coords.lat)
         } else {
             setLat("")
             setLng("")
