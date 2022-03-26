@@ -10,6 +10,7 @@ const typeDefs = gql`
     preview(url: String!): Preview!
     comments: [Comment!]!
   }
+
   type Mutation {
     submitPost(
       title: String!, 
@@ -23,10 +24,17 @@ const typeDefs = gql`
       content: String!,
       postId: ID!
     ): SubmitCommentResponse!
+
+    submitCommentVote(
+      vote: String!,
+      commentId: ID!
+    ): SubmitCommentVoteResponse!
   }
+
   type User {
     username: String!
   }
+
   type Post {
     id: ID!
     title: String!
@@ -37,11 +45,13 @@ const typeDefs = gql`
     url: String!
     comments: [Comment!]!
   }
+
   type SubmitPostResponse {
     success: Boolean!
     message: String
     postId: ID
   }
+
   type Preview {
     url: String!
     title: String
@@ -50,17 +60,34 @@ const typeDefs = gql`
     contentType: String
     favicons: [String]
   }
+
   type Comment {
     id: ID!
     content: String!
     author: User!
     post: Post!
     date: String!
+    upvotes: Int!
+    downvotes: Int!
   }
+
   type SubmitCommentResponse {
     success: Boolean!
     message: String
     commentId: ID
+  }
+
+  type CommentVote {
+    id: ID!
+    user: User!
+    comment: Comment!
+    vote: String!
+  }
+
+  type SubmitCommentVoteResponse {
+    success: Boolean!
+    message: String
+    commentVoteId: ID
   }
 `;
 

@@ -30,5 +30,7 @@ CREATE TABLE public.comment_votes (
   id SERIAL PRIMARY KEY,
   username TEXT REFERENCES users,
   comment_id INTEGER REFERENCES comments,
-  vote TEXT CHECK(vote = 'up' OR vote = 'down')
+  vote TEXT CHECK(vote = 'up' OR vote = 'down'),
+  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(username, comment_id)
 );

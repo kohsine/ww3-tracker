@@ -21,6 +21,10 @@ export const Comment = {
     dataSources.userAPI.getUserByUsername({ username: comment.author}),
   post: async (comment, _, { dataSources }) =>
     dataSources.postAPI.getPostById({ postId: comment.postId }),
+  upvotes: async (comment, _, { dataSources }) =>
+    dataSources.voteAPI.getVoteCountByComment({ commentId: comment.id, voteType: 'up' }),
+  downvotes: async (comment, _, { dataSources }) =>
+    dataSources.voteAPI.getVoteCountByComment({ commentId: comment.id, voteType: 'down' })
 }
 
 export const Mutation = {
@@ -31,5 +35,9 @@ export const Mutation = {
   submitComment: async (_, args, { dataSources, user }) => {
     const submitCommentResponse = await dataSources.commentAPI.submitComment({ ...args, user });
     return submitCommentResponse;
+  },
+  submitCommentVote: async (_, args, { dataSources, user }) => {
+    const submitCommentVoteResponse = await dataSources.voteAPI.submitCommentVote({ ...args, user });
+    return submitCommentVoteResponse;
   },
 };
