@@ -3,7 +3,8 @@ import UserAPI from '../../database/user'
 import PostAPI from '../../database/post';
 import CommentAPI from '../../database/comment';
 import typeDefs from '../../graphql/schema';
-import VoteAPI from '../../database/vote';
+import CommentVoteAPI from '../../database/commentVote';
+import PostVoteAPI from '../../database/postVote';
 
 const resolvers = require('../../graphql/resolvers');
 
@@ -11,7 +12,8 @@ const apolloServer = new ApolloServer({ typeDefs, resolvers, dataSources: () => 
     userAPI: new UserAPI(),
     postAPI: new PostAPI(),
     commentAPI: new CommentAPI(),
-    voteAPI: new VoteAPI()
+    commentVoteAPI: new CommentVoteAPI(),
+    postVoteAPI: new PostVoteAPI()
   }),
   context: ({ req: MicroRequest, res: ServerResponse }) => {
     const user = MicroRequest.cookies.username;

@@ -1,5 +1,4 @@
-const { Pool, Client } = require('pg')
-import { pg_config } from './connect'
+import client from './client';
 
 class PostAPI {
 
@@ -16,8 +15,6 @@ class PostAPI {
   }
 
   async getAllPosts() {
-    const client = new Client(pg_config)
-    client.connect()
     try {
       const res = await client.query('SELECT * FROM posts, users WHERE username = author;')
       return Promise.all(
@@ -25,23 +22,17 @@ class PostAPI {
       );
     } catch (e) {
       console.error(e.stack)
-    } finally {
-      client.end()
     }
   }
 
   async getPostById({ postId }) {
     const text = 'SELECT * FROM posts WHERE id = $1;';
     const values = [postId];
-    const client = new Client(pg_config)
-    client.connect()
     try {
       const res = await client.query(text, values);
       return this.postReducer(res.rows[0]);
     } catch (e) {
       console.error(e.stack)
-    } finally {
-      client.end()
     }
   }
 
@@ -50,10 +41,7 @@ class PostAPI {
 
     const text = 'INSERT INTO posts(title, description, lng, lat, author, url) VALUES($1, $2, $3, $4, $5, $6) RETURNING *';
     const values = [args.title, args.description, args.lng, args.lat, args.user, args.url];
-    ;
 
-    const client = new Client(pg_config);
-    client.connect();
     try {
       const res = await client.query(text, values);
       console.log("res " + JSON.stringify(res));
@@ -62,8 +50,6 @@ class PostAPI {
     } catch (e) {
       console.error(e.stack);
       return {success: false, message: "Internal server error."};
-    } finally {
-      client.end();
     }
   }
 }

@@ -964,3 +964,8 @@ INSERT INTO public.comment_votes (username, comment_id, vote) VALUES
 ('electric', '1', 'up'),
 ('electric', '2', 'down'),
 ('electric', '3', 'up');
+
+INSERT INTO public.post_votes (username, post_id, vote) VALUES
+('electric', '1', 'up'),
+('electric', '2', 'down'),
+('electric', '3', 'up');

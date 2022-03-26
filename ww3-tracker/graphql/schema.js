@@ -29,6 +29,11 @@ const typeDefs = gql`
       vote: String!,
       commentId: ID!
     ): SubmitCommentVoteResponse!
+
+    submitPostVote(
+      vote: String!,
+      postId: ID!
+    ): SubmitPostVoteResponse!
   }
 
   type User {
@@ -44,6 +49,8 @@ const typeDefs = gql`
     author: User!
     url: String!
     comments: [Comment!]!
+    upvotes: Int!
+    downvotes: Int!
   }
 
   type SubmitPostResponse {
@@ -88,6 +95,19 @@ const typeDefs = gql`
     success: Boolean!
     message: String
     commentVoteId: ID
+  }
+
+  type PostVote {
+    id: ID!
+    user: User!
+    post: Post!
+    vote: String!
+  }
+
+  type SubmitPostVoteResponse {
+    success: Boolean!
+    message: String
+    postVoteId: ID
   }
 `;
 

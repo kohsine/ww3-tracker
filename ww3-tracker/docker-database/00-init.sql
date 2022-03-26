@@ -34,3 +34,14 @@ CREATE TABLE public.comment_votes (
   created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   UNIQUE(username, comment_id)
 );
+
+CREATE TABLE public.post_votes (
+  id SERIAL PRIMARY KEY,
+  username TEXT REFERENCES users,
+  post_id INTEGER REFERENCES posts,
+  vote TEXT CHECK(vote = 'up' OR vote = 'down'),
+  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(username, post_id)
+);
+
+

@@ -1,5 +1,4 @@
-const { Pool, Client } = require('pg')
-import { pg_config } from './connect'
+import client from './client';
 
 class CommentAPI {
 
@@ -14,8 +13,6 @@ class CommentAPI {
   }
 
   async getAllComments() {
-    const client = new Client(pg_config)
-    client.connect()
     try {
       const res = await client.query('SELECT * FROM comments;')
       return Promise.all(
@@ -23,16 +20,12 @@ class CommentAPI {
       );
     } catch (e) {
       console.error(e.stack)
-    } finally {
-      client.end()
     }
   }
 
   async getCommentsByPostId({ postId }) {
     const text = 'SELECT * FROM comments WHERE postId = $1;';
     const values = [postId];
-    const client = new Client(pg_config)
-    client.connect()
     try {
       const res = await client.query(text, values);
       return Promise.all(
@@ -40,8 +33,6 @@ class CommentAPI {
       );
     } catch (e) {
       console.error(e.stack)
-    } finally {
-      client.end()
     }
   }
 
@@ -51,8 +42,6 @@ class CommentAPI {
     const text = 'INSERT INTO comments(content, author, postId) VALUES($1, $2, $3) RETURNING *';
     const values = [args.content, args.user, args.postId];
 
-    const client = new Client(pg_config);
-    client.connect();
     try {
       const res = await client.query(text, values);
       console.log("res " + JSON.stringify(res));
@@ -61,8 +50,6 @@ class CommentAPI {
     } catch (e) {
       console.error(e.stack);
       return { success: false, message: "Internal server error." };
-    } finally {
-      client.end();
     }
   }
 }
