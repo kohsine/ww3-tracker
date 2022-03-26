@@ -82,36 +82,3 @@ try {
 } catch (err) {
   console.error(err);
 }
-
-/*unsplash.photos.getRandom({ count: 500 }).then(data => {
-  if (data.errors) {
-    // handle error here
-    console.log('error occurred: ', data.errors[0]);
-  } else {
-    // handle success here
-    const photos = data.response.map((photo) => reducer(photo));
-    const lines = photos.map((photo) => lineReducer(photo));
-    const authors = photos.map((photo) => photo.author);
-    const uniq_authors = [...new Set(authors)];
-    const uniq_authors_line = uniq_authors.map((author) => authorLineMapper(author));
-    try {
-      try {
-        fs.unlinkSync('./photos.txt');
-        fs.unlinkSync('./authors.txt');
-      } catch (err) {
-      }
-
-      lines.forEach((element, i) => {
-        fs.writeFileSync('./photos.txt', element + (i == lines.length - 1 ? ";\n" : ",\n"), { flag: 'a+' });
-      });
-
-      uniq_authors_line.forEach((element, i) => {
-        fs.writeFileSync('./authors.txt', element + (i == uniq_authors_line.length - 1 ? ";\n" : ",\n"), { flag: 'a+' });
-      })
-
-      //file written successfully
-    } catch (err) {
-      console.error(err);
-    }
-  }
-});*/

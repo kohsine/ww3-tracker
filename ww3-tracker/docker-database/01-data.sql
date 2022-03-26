@@ -954,8 +954,11 @@ INSERT INTO public.posts (title, description, lng, lat, author, url) VALUES
 ('tried method try blind drew mighty', 'newspaper police cause fifteen stick aware community remain slide activity trap means joined', 51.64171660961395, 25.63238568867827, 'fewer', 'https://s3.us-west-2.amazonaws.com/images.unsplash.com/photo-1647893767164-8a231e5a5ce9');
 
 
-/*INSERT INTO public.comments (content, author, postId) VALUES
-('hello i am biggus dickus', 'Benjie', 1),
-('comment hnghhhhhhh', 'Lexius', 2),
-('interesting comment hollhjljlj', 'Benjie', 3),
-('hello i am smol dickus', 'Benjie', 1); */
+INSERT INTO public.comments (content, author, postId) VALUES
+('hello i am biggus dickus', 'electric', 1),
+('comment hnghhhhhhh', 'electric', 2),
+('interesting comment hollhjljlj', 'electric', 3),
+('hello i am smol dickus', 'electric', 1);
+
+INSERT INTO public.comment_votes (username, comment_id, vote) VALUES
+('electric', '1', 'up');

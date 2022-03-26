@@ -1,12 +1,12 @@
 {
   "private": true,
   "scripts": {
-    "dev": "docker-compose --env-file ./.env up -d  && next -p 80",
+    "dev": "docker-compose --env-file ./.env -f ./docker-database/docker-compose.yml up -d  && next -p 80",
     "dev1": "next",
     "build": "next build",
     "start": "next start",
-    "db-reset": "docker-compose down && docker volume prune --force && docker-compose build",
-    "db-start": "docker-compose up"
+    "db-reset": "docker-compose -f ./docker-database/docker-compose.yml down && docker volume prune --force && docker-compose -f ./docker-database/docker-compose.yml build",
+    "db-start": "docker-compose -f ./docker-database/docker-compose.yml up"
   },
   "dependencies": {
     "@apollo/client": "^3.5.10",

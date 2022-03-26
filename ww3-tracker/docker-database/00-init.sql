@@ -25,3 +25,10 @@ CREATE TABLE public.comments (
   postid INTEGER REFERENCES posts,
   created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE public.comment_votes (
+  id SERIAL PRIMARY KEY,
+  username TEXT REFERENCES users,
+  comment_id INTEGER REFERENCES comments,
+  vote TEXT CHECK(vote = 'up' OR vote = 'down')
+);
