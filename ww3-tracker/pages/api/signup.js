@@ -1,6 +1,5 @@
 import { setCookies, getCookie } from 'cookies-next';
-import { pg_config } from '../../database/connect';
-const { Pool, Client } = require('pg')
+import client from '../../database/client';
 
 export default async function handler(req, res) {
     let { form_username: username, password } = req.body;
@@ -8,14 +7,15 @@ export default async function handler(req, res) {
     console.log("username " + username);
     console.log("password " + password);
 
-    const client = new Client(pg_config)
-    client.connect()
-    const user = await client.query(`SELECT * FROM users WHERE username = '${username}';`)
-        .then(res => res.rows)
-        .catch(e => console.error(e.stack));
-    console.log("user " + JSON.stringify(user));
+    let user;
+    try {
+        const { rows } = await client.query(`SELECT * FROM users WHERE username = '${username}';`);
+        user = rows[0];
+    } catch (e) {
+        console.log(e);
+    }
 
-    if (user.length > 0) {
+    if (user) {
         console.log("username already exists.");
         res.status(409).json({ error: "user already exists." });
         return;
@@ -30,14 +30,11 @@ export default async function handler(req, res) {
     const text = 'INSERT INTO users(username, pass) VALUES($1, $2) RETURNING *;';
     const values = [username, password];
     try {
-        const res = await client.query(text, values);
-        console.log("added user ", res.rows[0]);
-    } catch (err) {
-        console.log(err.stack);
+        const { rows } = await client.query(text, values);
+    } catch (e) {
+        console.log(e);
         res.status(500).json({ error: "Internal server error: Unable to add user." });
         return;
-    } finally {
-        client.end();
     }
 
     var jwt = require('jsonwebtoken');

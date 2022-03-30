@@ -1,18 +1,16 @@
 import { setCookies, getCookie } from 'cookies-next';
-import { pg_config } from '../../database/connect';
-const { Pool, Client } = require('pg')
+import client from '../../database/client';
 
 export default async function handler(req, res) {
-  setCookies('server-key', 'value', { req, res, maxAge: 60 * 60 * 24, sameSite: "strict" });
-  const cookie = getCookie('server-key', { req, res });
   const { form_username: username, password } = req.body;
 
-  const client = new Client(pg_config)
-  client.connect()
-  const user = await client.query(`SELECT * FROM users WHERE username = '${username}';`)
-  .then(res => res.rows[0])
-  .catch(e => console.error(e.stack))
-  .finally(() => client.end());
+  let user;
+  try {
+    const { rows } = await client.query(`SELECT * FROM users WHERE username = '${username}';`);
+    user = rows[0];
+  } catch (e) {
+    console.log(e);
+  }
 
   console.log("user " + JSON.stringify(user));
   if (!user) {
