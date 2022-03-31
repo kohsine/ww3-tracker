@@ -4,8 +4,6 @@ import client from '../../database/client';
 export default async function handler(req, res) {
     let { form_username: username, password } = req.body;
     username = username.trim();
-    console.log("username " + username);
-    console.log("password " + password);
 
     let user;
     try {
@@ -27,8 +25,11 @@ export default async function handler(req, res) {
         return;
     }
 
+    const bcrypt = require('bcrypt');
+    const hash = await bcrypt.hash(password, 10);
+
     const text = 'INSERT INTO users(username, pass) VALUES($1, $2) RETURNING *;';
-    const values = [username, password];
+    const values = [username, hash];
     try {
         const { rows } = await client.query(text, values);
     } catch (e) {

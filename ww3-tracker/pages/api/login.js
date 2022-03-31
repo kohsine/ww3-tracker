@@ -19,9 +19,9 @@ export default async function handler(req, res) {
     return;
   }
 
-  if (user.pass != password) {
-    console.log("wrong password");
-    console.log("user password " + user.pass)
+  const bcrypt = require('bcrypt');
+  const hash = user.pass;
+  if (!await bcrypt.compare(password, hash)) {
     res.status(403).json({error: "password incorrect"});
     return;
   }
