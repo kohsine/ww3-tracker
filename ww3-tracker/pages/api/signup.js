@@ -39,7 +39,7 @@ export default async function handler(req, res) {
     }
 
     var jwt = require('jsonwebtoken');
-    var token = jwt.sign({ username }, 'shhhhh');
+    var token = jwt.sign({ username }, process.env.JWT_SECRET);
     setCookies('token', token, { req, res, maxAge: 60 * 60 * 24, sameSite: "strict" });
     setCookies('username', username, { req, res, maxAge: 60 * 60 * 24, sameSite: "strict" });
 
