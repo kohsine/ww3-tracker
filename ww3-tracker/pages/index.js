@@ -2,12 +2,12 @@ import { Box, Container, TextField, Stack, Button } from '@mui/material'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from "react";
 import { getCookies, getCookie, setCookies, removeCookies } from 'cookies-next';
-import SubmitContent from './components/content/submitContent'
-import Map from './components/map/map'
+import SubmitContent from '../components/content/submitContent'
+import Map from '../components/map/map'
 import { mapPoints } from '../utils/testData'
 import { useQuery, gql } from '@apollo/client';
-import ContentView from './components/content/contentView';
-import CommentView from './components/content/commentView';
+import ContentView from '../components/content/contentView';
+import CommentView from '../components/content/commentView';
 
 // #191919
 // #2D4263
