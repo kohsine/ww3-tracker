@@ -7,6 +7,7 @@ import Map from './components/map/map'
 import { mapPoints } from '../utils/testData'
 import { useQuery, gql } from '@apollo/client';
 import ContentView from './components/content/contentView';
+import CommentView from './components/content/commentView';
 
 // #191919
 // #2D4263
@@ -132,6 +133,8 @@ export default function Index() {
 
                                         </Stack>
                                         {selectedPost && <ContentView post={selectedPost} />}
+                                        {selectedPost && <CommentView post={selectedPost} />}
+
                                         <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false); refetch(); }} coords={selectedCoords} />
                                     </>
                                 ) : (

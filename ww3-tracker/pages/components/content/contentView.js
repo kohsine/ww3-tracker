@@ -2,6 +2,7 @@ import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, Butt
 import React, { useEffect, useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 import { BiUpvote, BiDownvote } from 'react-icons/bi'
+import { Box } from '@mui/system';
 
 
 export default function ContentView(props) {
@@ -33,6 +34,14 @@ export default function ContentView(props) {
         setIsLoading(true);
     }, [props.post]);
 
+    function upvote() {
+        // TODO
+    }
+
+    function downvote() {
+        // todo
+    }
+
     return (
         <Card style={{ height: '100%', margin: '5px', width: '65vh' }}>
             {
@@ -58,10 +67,13 @@ export default function ContentView(props) {
             <CardContent>
                 <Stack direction={'row'} alignItems="center">
                     <ButtonGroup variant="outlined" orientation="vertical">
-                        <IconButton>
+                        <IconButton onClick={upvote}>
                             <BiUpvote />
                         </IconButton>
-                        <IconButton>
+                        <Box style={{ textAlign: 'center' }}>
+                            <Typography variant="body2">{(props.post?.upvotes - props.post?.downvotes) || 0}</Typography>
+                        </Box>
+                        <IconButton onClick={downvote}>
                             <BiDownvote />
                         </IconButton>
                     </ButtonGroup>
@@ -76,9 +88,6 @@ export default function ContentView(props) {
                     {props.post.description}
                 </Typography>
             </CardContent>
-            <CardActions>
-
-            </CardActions>
         </Card>
     )
 }
