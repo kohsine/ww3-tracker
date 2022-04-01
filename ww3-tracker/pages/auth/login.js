@@ -6,7 +6,8 @@ import { useRouter } from 'next/router'
 export default function Login(props) {
 
     const [formValues, setFormValues] = useState({ username: "", password: "" });
-    const [error, setError] = useState("");
+    const [loginError, setLoginError] = useState("");
+    const [signupError, setSignupError] = useState("");
 
     const router = useRouter();
 
@@ -41,13 +42,13 @@ export default function Login(props) {
 
         if (res.status == 404) {
             console.log("Username not found.");
-            setError("Username not found.")
+            setLoginError("Username not found.")
             return;
         }
 
         if (res.status == 403) {
             console.log("Incorrect password.")
-            setError("Incorrect password.")
+            setLoginError("Incorrect password.")
             return;
         }
 
@@ -77,14 +78,14 @@ export default function Login(props) {
 
         if (res.status != 200) {
             console.log(body.error);
-            setError(body.error);
+            setSignupError(body.error);
             return;
         }
 
         router.push('/');
     }
 
-    const inputStyle = { input: { color: '#2D4263' }, label: { color: '#2D4263' } }
+    const inputStyle = { input: { color: '#ECDBBA' }, label: { color: '#ECDBBA' } }
 
     return <Stack direction="row" justifyContent="space-evenly" alignItems="center" height={"100vh"}>
         <style jsx global>
@@ -95,11 +96,12 @@ export default function Login(props) {
                     font-family: 'Georgia', sans-serif;
                     color: #ECDBBA;
                 }
-                `}
+            `}
         </style>
         <form onSubmit={handleLoginSubmit}>
             <Stack spacing={2} justifyContent="center">
                 <Typography variant="h5" align="center">Login</Typography>
+                <Typography variant="subtitle1" align="center">{loginError}</Typography>
                 <TextField size="small" name="username" variant="filled" label="Username" onChange={handleInputChange} sx={inputStyle} />
                 <TextField size="small" name="password" variant="filled" label="Password" type="password" onChange={handleInputChange} sx={inputStyle} />
                 <Button size="small" name="action" value="login" variant="outlined" type="submit">Login</Button>
@@ -108,7 +110,7 @@ export default function Login(props) {
         <form onSubmit={handleSignupSubmit}>
             <Stack spacing={2} justifyContent="center">
                 <Typography variant="h5" align="center">Sign Up</Typography>
-                <Typography variant="subtitle1">{error}</Typography>
+                <Typography variant="subtitle1" align="center">{signupError}</Typography>
                 <TextField size="small" name="username" variant="filled" label="Username" onChange={handleInputChange} sx={inputStyle} />
                 <TextField size="small" name="password" variant="filled" label="Password" type="password" onChange={handleInputChange} sx={inputStyle} />
                 <Button size="small" ame="action" value="signup" variant="contained" type="submit">Signup</Button>
