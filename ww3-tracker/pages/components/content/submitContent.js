@@ -42,7 +42,10 @@ export default function SubmitContent(props) {
     }, [coords])
 
     function submitDisabled() {
-        if (!title || !description || !lat || !lng || !(url || file)) 
+        if (!title || !description || !lat || !lng || !(url || file))
+            return true;
+        // check valid lat/lng
+        if (parseFloat(lat) > 90 || parseFloat(lat) < -90 || parseFloat(lng) > 180 || parseFloat(lng) < -180)
             return true;
         return false;
     }
@@ -95,7 +98,12 @@ export default function SubmitContent(props) {
     return <Dialog open={open} onClose={onClose}>
         <DialogTitle>Submit New Content</DialogTitle>
         <DialogContent>
-            <DialogContentText marginBottom={3}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eleifend erat ut ex laoreet fermentum. Cras quis sollicitudin arcu. Maecenas non ornare dui. Curabitur rutrum malesuada massa, sed rutrum neque auctor et. Nulla id neque odio. Morbi vel imperdiet turpis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec commodo non felis eget volutpat. Phasellus aliquet dolor at elit mattis, a porttitor nisl feugiat. Ut eu nibh rutrum, rutrum sapien vitae, condimentum mi. In eget nunc at libero sollicitudin gravida. Fusce consequat fermentum turpis.</DialogContentText>
+            <DialogContentText marginBottom={3}>
+                Choose a summarizing title and make your description descriptive (refrain from using obscenity unless it's contextual).
+                Be sure to give context and as much information on the event as possible.
+                Select a location (latitude and longitude) to help other users find your content by left-clicking somewhere on the map.
+                Finally upload a photo or video, or paste a link related to your submission!
+            </DialogContentText>
             <Stack spacing={2}>
 
                 <TextField label="Title" required value={title} onChange={e => { setTitle(e.target.value) }} />

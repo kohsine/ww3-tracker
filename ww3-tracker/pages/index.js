@@ -119,11 +119,14 @@ export default function Index() {
                                 username ? (
                                     <>
 
-                                        <Stack direction="column" width="100%" height="100%" spacing={2}>
+                                        <Stack direction="column" width="100%" height="100%" spacing={1}>
 
-                                            <Button size="medium" id="create" sx={{ visibility: isPostVisible }} variant="outlined" onClick={() => { setCreateIsOpen(true); }}>
-                                                Create New Post
-                                            </Button>
+                                            <Stack direction="column" spacing={2} alignItems="center" justifyContent={'center'} style={{ backgroundColor: '#ffffff10', padding: '1%', width: '100%', boxSizing: 'border-box' }}>
+
+                                                <Button size="medium" id="create" sx={{ visibility: isPostVisible }} variant="outlined" onClick={() => { setCreateIsOpen(true); }}>
+                                                    Create New Post
+                                                </Button>
+                                            </Stack>
 
                                             <Map style={{ width: '100%', position: 'relative', height: '100%' }} onMapClick={setSelectedCoords} points={points} onMarkerClick={setSelectedPost} />
 
@@ -136,7 +139,7 @@ export default function Index() {
 
                                         <Stack direction="column" width="100%" height="100%" spacing={1}>
 
-                                            <Stack direction="column" spacing={2} alignItems="center" justifyContent={'center'} style={{backgroundColor: '#ffffff10', padding: '1%', width: '100%', boxSizing: 'border-box'}}>
+                                            <Stack direction="column" spacing={2} alignItems="center" justifyContent={'center'} style={{ backgroundColor: '#ffffff10', padding: '1%', width: '100%', boxSizing: 'border-box' }}>
                                                 <h3 style={{ fontWeight: 200, color: "#ECDBBA" }}>Please login to post!</h3>
                                                 <Button size="medium" id="gotoLogin" variant="outlined" onClick={() => { router.push("/auth/login"); }}>
                                                     Login
