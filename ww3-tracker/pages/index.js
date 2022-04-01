@@ -132,12 +132,24 @@ export default function Index() {
                                         <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false); refetch(); }} coords={selectedCoords} />
                                     </>
                                 ) : (
-                                    <Stack direction="column" width="100%" spacing={2} alignItems="center" justifyContent={'center'} height="500px">
-                                        <h3 style={{ fontWeight: 200, color: "#ECDBBA" }}>Please login to see posts</h3>
-                                        <Button size="medium" id="gotoLogin" variant="outlined" onClick={() => { router.push("/auth/login"); }}>
-                                            Login
-                                        </Button>
-                                    </Stack>
+                                    <>
+
+                                        <Stack direction="column" width="100%" height="100%" spacing={1}>
+
+                                            <Stack direction="column" spacing={2} alignItems="center" justifyContent={'center'} style={{backgroundColor: '#ffffff10', padding: '1%', width: '100%', boxSizing: 'border-box'}}>
+                                                <h3 style={{ fontWeight: 200, color: "#ECDBBA" }}>Please login to post!</h3>
+                                                <Button size="medium" id="gotoLogin" variant="outlined" onClick={() => { router.push("/auth/login"); }}>
+                                                    Login
+                                                </Button>
+                                            </Stack>
+
+                                            <Map style={{ width: '100%', position: 'relative', height: '100%' }} onMapClick={setSelectedCoords} points={points} onMarkerClick={setSelectedPost} />
+
+                                        </Stack>
+                                        {selectedPost && <ContentView post={selectedPost} />}
+                                        <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false); refetch(); }} coords={selectedCoords} />
+                                    </>
+
                                 )
                             }
                         </Stack>
