@@ -30,8 +30,8 @@ const GET_POSTS = gql`
     }
 `;
 
-export default function Index() {
-    const [username, setUsername] = useState(null);
+export default function Index({ user }) {
+    const [username, setUsername] = useState('');
     const [createIsOpen, setCreateIsOpen] = useState(false);
     const [selectedCoords, setSelectedCoords] = useState(null);
     const [selectedPost, setSelectedPost] = useState(null);

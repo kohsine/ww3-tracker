@@ -78,7 +78,7 @@ export default function ContentView(props) {
                         </IconButton>
                     </ButtonGroup>
 
-                    <a href={props.post.url} target="_blank" style={{ textDecoration: 'none' }}>
+                    <a href={props.post.url} style={{ textDecoration: 'none' }}>
                         <Typography gutterBottom variant="h5" >
                             {props.post.title}
                         </Typography>

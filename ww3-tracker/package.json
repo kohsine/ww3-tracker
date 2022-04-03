@@ -5,6 +5,7 @@
     "dev1": "next",
     "build": "next build",
     "start": "next start",
+    "lint": "next lint",
     "db-reset": "docker-compose -f ./docker-database/docker-compose.yml down && docker volume prune --force && docker-compose -f ./docker-database/docker-compose.yml build",
     "db-start": "docker-compose -f ./docker-database/docker-compose.yml up"
   },
@@ -24,6 +25,7 @@
     "graphql": "^15.5.1",
     "graphql-request": "^4.1.0",
     "image-extensions": "^1.1.0",
+    "iron-session": "^6.1.1",
     "jsonwebtoken": "^8.5.1",
     "link-preview-js": "^2.1.13",
     "micro": "^9.3.4",
@@ -44,6 +46,8 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.39",
+    "eslint": "8.12.0",
+    "eslint-config-next": "12.1.4",
     "micro-dev": "^3.0.0",
     "typescript": "^4.6.2"
   }
