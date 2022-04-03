@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "docker-compose --env-file ./.env -f ./docker-database/docker-compose.yml up -d  && next -p 80",
+    "dev": "docker-compose --env-file ./.env -f ./docker-database/docker-compose.yml up -d  && next",
     "dev1": "next",
     "build": "next build",
     "start": "next start",
