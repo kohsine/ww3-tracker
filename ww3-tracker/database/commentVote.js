@@ -22,6 +22,19 @@ class CommentVoteAPI {
         }
     }
 
+    async getVoteById({ commentId, user }) {
+        const text = 'SELECT * FROM comment_votes WHERE comment_id = $1 AND username = $2;';
+        const values = [commentId, user];
+        try {
+            const { rows } = await client.query(text, values);
+            if (rows.length == 0) return null;
+            const vote = this.voteReducer(rows[0]);
+            return vote;
+        } catch (e) {
+            console.error(e.stack);
+        }
+    }
+
     async submitCommentVote(args) {
         console.log("username " + args.user);
     
@@ -36,7 +49,7 @@ class CommentVoteAPI {
             console.error(e.stack);
             return { success: false, message: "Internal server error." };
         }
-      }
+    }
   
 }
 

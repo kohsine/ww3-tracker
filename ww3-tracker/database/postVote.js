@@ -22,6 +22,19 @@ class PostVoteAPI {
         }
     }
 
+    async getVoteById({ postId, user }) {
+        const text = 'SELECT * FROM post_votes WHERE post_id = $1 AND username = $2;';
+        const values = [postId, user];
+        try {
+            const { rows } = await client.query(text, values);
+            if (rows.length == 0) return null;
+            const vote = this.voteReducer(rows[0]);
+            return vote;
+        } catch (e) {
+            console.error(e.stack);
+        }
+    }
+
     async submitPostVote(args) {
         console.log("username " + args.user);
     

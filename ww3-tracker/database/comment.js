@@ -23,6 +23,18 @@ class CommentAPI {
     }
   }
 
+  async getCommentById({ commentId }) {
+    const text = 'SELECT * FROM comments WHERE id = $1;';
+    const values = [commentId];
+    try {
+      const { rows } = await client.query(text, values);
+      if (rows.length == 0) return null;
+      return this.commentReducer(rows[0]);
+    } catch (e) {
+      console.error(e.stack)
+    }
+  }
+
   async getCommentsByPostId({ postId }) {
     const text = 'SELECT * FROM comments WHERE postId = $1;';
     const values = [postId];

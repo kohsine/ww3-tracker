@@ -9,6 +9,8 @@ const typeDefs = gql`
     post(id: ID!): Post
     preview(url: String!): Preview!
     comments: [Comment!]!
+    commentVote(id: ID!): CommentVote
+    postVote(id: ID!): PostVote
   }
 
   type Mutation {
@@ -87,7 +89,7 @@ const typeDefs = gql`
   type CommentVote {
     id: ID!
     user: User!
-    comment: Comment!
+    comment: Comment
     vote: String!
   }
 
@@ -100,7 +102,7 @@ const typeDefs = gql`
   type PostVote {
     id: ID!
     user: User!
-    post: Post!
+    post: Post
     vote: String!
   }
 

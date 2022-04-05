@@ -6,7 +6,9 @@ export const Query = {
   posts: (_, __, { dataSources }) => dataSources.postAPI.getAllPosts(),
   post: async (_, { id }, { dataSources }) => dataSources.postAPI.getPostById({ postId: id }),
   preview: (_, { url }, { dataSources }) => getLinkPreview(url),
-  comments: (_, __, { dataSources }) => dataSources.commentAPI.getAllComments()
+  comments: (_, __, { dataSources }) => dataSources.commentAPI.getAllComments(),
+  commentVote: (_, { id }, { dataSources, user }) => dataSources.commentVoteAPI.getVoteById({ commentId: id, user }),
+  postVote: (_, { id }, { dataSources, user }) => dataSources.postVoteAPI.getVoteById({ postId: id, user })
 };
 
 export const Post = {
@@ -20,6 +22,13 @@ export const Post = {
     dataSources.postVoteAPI.getVoteCountByPost({ postId: post.id, voteType: 'down' })
 };
 
+export const PostVote = {
+  user: async (postVote, _, { dataSources }) =>
+    dataSources.userAPI.getUserByUsername({ username: postVote.username}),
+  post: async (postVote, _, { dataSources }) =>
+    dataSources.postAPI.getPostById({ postId: postVote.postId }),
+}
+
 export const Comment = {
   author: async (comment, _, { dataSources }) =>
     dataSources.userAPI.getUserByUsername({ username: comment.author}),
@@ -29,6 +38,13 @@ export const Comment = {
     dataSources.commentVoteAPI.getVoteCountByComment({ commentId: comment.id, voteType: 'up' }),
   downvotes: async (comment, _, { dataSources }) =>
     dataSources.commentVoteAPI.getVoteCountByComment({ commentId: comment.id, voteType: 'down' })
+}
+
+export const CommentVote = {
+  user: async (commentVote, _, { dataSources }) =>
+    dataSources.userAPI.getUserByUsername({ username: commentVote.username}),
+  comment: async (commentVote, _, { dataSources }) =>
+    dataSources.commentAPI.getCommentById({ commentId: commentVote.commentId }),
 }
 
 export const Mutation = {
