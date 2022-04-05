@@ -7,44 +7,28 @@ import { Box } from '@mui/system';
 
 
 export default function CommentView(props) {
-    const [isLoading, setIsLoading] = useState(true);
+    const [vote, setVote] = useState(0); // 0 = no vote, 1 = upvote, -1 = downvote
 
-    const QUERY = gql`
-            query($url: String!) {
-                preview(url: $url) {
-                    url
-                    title
-                    images
-                    mediaType
-                    contentType
-                    favicons
-                }
-            }
-        `
-    const { loading, error, data } = useQuery(QUERY, { variables: { url: props.post?.url } });
+    function upvote() {
+        // TODO
+    }
 
-    useEffect(() => {
-        if (data) {
-            setIsLoading(false);
-        }
-    }, [data]);
-
-    useEffect(() => {
-        setIsLoading(true);
-    }, [props.post]);
+    function downvote() {
+        // todo
+    }
 
     function renderComment(comment) {
 
         return (
             <Stack direction={'row'} alignItems="center">
                 <ButtonGroup variant="outlined" orientation="vertical">
-                    <IconButton onClick={null}>
+                    <IconButton onClick={upvote} disabled={!props.username} >
                         <AiOutlineCaretUp />
                     </IconButton>
                     <Box style={{ textAlign: 'center' }}>
                         <Typography variant="body2">{(comment.upvotes - comment.downvotes) || 0}</Typography>
                     </Box>
-                    <IconButton onClick={null}>
+                    <IconButton onClick={downvote} disabled={!props.username} >
                         <AiOutlineCaretDown />
                     </IconButton>
                 </ButtonGroup>
@@ -72,18 +56,8 @@ export default function CommentView(props) {
                     Comments
                 </Typography>
                 {
-                    renderComment({
-                        id: '1',
-                        content: 'adlksfjlkasdjl afdsjlk fjadsjfdsa jlkfdsaj  fads fads fadsfd af ad fadsk',
-                        author: {
-                            username: 'joe'
-                        },
-                        post: {
-                            id: '1',
-                        },
-                        date: Date.now(),
-                        upvotes: 12,
-                        downvotes: 3
+                    props.post.comments?.map(comment => {
+                        return renderComment(comment);
                     })
                 }
             </CardContent>

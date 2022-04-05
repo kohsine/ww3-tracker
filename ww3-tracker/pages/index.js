@@ -132,8 +132,8 @@ export default function Index({ user }) {
                                             <Map style={{ width: '100%', position: 'relative', height: '100%' }} onMapClick={setSelectedCoords} points={points} onMarkerClick={setSelectedPost} />
 
                                         </Stack>
-                                        {selectedPost && <ContentView post={selectedPost} />}
-                                        {selectedPost && <CommentView post={selectedPost} />}
+                                        {selectedPost && <ContentView post={selectedPost} username={username} />}
+                                        {selectedPost && <CommentView post={selectedPost} username={username} />}
 
                                         <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false); refetch(); }} coords={selectedCoords} />
                                     </>

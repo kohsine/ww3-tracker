@@ -8,6 +8,7 @@ import { Box } from '@mui/system';
 export default function ContentView(props) {
     const [preview, setPreview] = useState({});
     const [isLoading, setIsLoading] = useState(true);
+    const [vote, setVote] = useState(0); // 0 = no vote, 1 = upvote, -1 = downvote
 
     const QUERY = gql`
             query($url: String!) {
@@ -27,6 +28,7 @@ export default function ContentView(props) {
         if (data) {
             setPreview(data.preview);
             setIsLoading(false);
+            // TODO check if user has voted on this post
         }
     }, [data]);
 
@@ -67,13 +69,14 @@ export default function ContentView(props) {
             <CardContent>
                 <Stack direction={'row'} alignItems="center">
                     <ButtonGroup variant="outlined" orientation="vertical">
-                        <IconButton onClick={upvote}>
+                        <IconButton onClick={upvote} disabled={!props.username} color={vote === 1 ? "inherit" : "default"}>
                             <BiUpvote />
                         </IconButton>
                         <Box style={{ textAlign: 'center' }}>
+                            {/* TODO get vote count */}
                             <Typography variant="body2">{(props.post?.upvotes - props.post?.downvotes) || 0}</Typography>
                         </Box>
-                        <IconButton onClick={downvote}>
+                        <IconButton onClick={downvote} disabled={!props.username} color={vote === -1 ? "inherit" : "default"}>
                             <BiDownvote />
                         </IconButton>
                     </ButtonGroup>
