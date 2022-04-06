@@ -37,7 +37,6 @@ export default function ContentView(props) {
 
     useEffect(() => {
         if (data) {
-            console.log(data)
             setPreview(data.preview);
             if (data.postVote) {
                 setVote(data.postVote.vote === 'up' ? 1 : -1);
@@ -48,11 +47,14 @@ export default function ContentView(props) {
     }, [data]);
 
     useEffect(() => {
+        setVote(0);
+    }, [loading]);
+
+    useEffect(() => {
         console.log(error)
     }, [error]);
 
     useEffect(() => {
-        console.log(props.post)
         refetch();
     }, [props.post]);
 

@@ -26,21 +26,6 @@ const GET_POSTS = gql`
               username
             }
             url
-            comments {
-              id
-              content
-              author {
-                username
-              }
-              post {
-                id
-              }
-              date
-              upvotes
-              downvotes
-            }
-            upvotes
-            downvotes
           }
     }
 `;
@@ -64,6 +49,7 @@ export default function Index({ user }) {
     }, []);
 
     useEffect(() => {
+        console.log(data)
         if (data) {
             const posts = data.posts;
             const pts = posts.map(post => (
@@ -147,8 +133,8 @@ export default function Index({ user }) {
                                             <Map style={{ width: '100%', position: 'relative', height: '100%' }} onMapClick={setSelectedCoords} points={points} onMarkerClick={setSelectedPost} />
 
                                         </Stack>
-                                        {selectedPost && <ContentView post={selectedPost} username={username} refetch={refetch}/>}
-                                        {selectedPost && <CommentView post={selectedPost} username={username} refetch={refetch}/>}
+                                        {selectedPost && <ContentView post={selectedPost} username={username} />}
+                                        {selectedPost && <CommentView post={selectedPost} username={username} />}
 
                                         <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false); refetch(); }} coords={selectedCoords} />
                                     </>

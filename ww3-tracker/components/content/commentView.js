@@ -15,21 +15,78 @@ const SUBMIT_COMMENT = gql`
     }
     `
 
-const SUBMIT_COMMENT_VOTE = gql`
-    mutation($commentId: ID!, $vote: String!) {
-        submitCommentVote(commentId: $commentId, vote: $vote) {
-            success
-            message
-            commentVoteId
+const GET_COMMENTS = gql`
+    query($postId: ID!) {
+        post(id: $postId) {
+          comments {
+            id
+            content
+            author {
+              username
+            }
+            date
+            upvotes
+            downvotes
+          }
         }
-    }
-    `
+      }
+      
+`
+
+// const SUBMIT_COMMENT_VOTE = gql`
+//     mutation($commentId: ID!, $vote: String!) {
+//         submitCommentVote(commentId: $commentId, vote: $vote) {
+//             success
+//             message
+//             commentVoteId
+//         }
+//     }
+//     `
 
 export default function CommentView(props) {
     // const [vote, setVote] = useState(0); // 0 = no vote, 1 = upvote, -1 = downvote
     const [comment, setComment] = useState('');
+    const [comments, setComments] = useState([]);
 
-    const [submitComment, { loading }] = useMutation(SUBMIT_COMMENT, { variables: { postId: props.post?.id, content: comment } });
+    // useEffect(() => {
+    //     if (props.post.comments !== comments) 
+    //         setComments(props.post.comments);
+    // }, [props.post.comments]);
+
+    // useEffect(() => {
+    //     const post = props.data.posts.find(p => p.id === props.post.id);
+    //     console.log('ajdsfkljadskl', post)
+    //     if (post) {
+    //         setComments(post.comments);
+    //     }
+    // }, [props.data]);
+
+
+
+    const [submitComment, { loading, data, error }] = useMutation(SUBMIT_COMMENT, { variables: { postId: props.post?.id, content: comment } });
+    const { data: commentData, loading: commentLoading, error: commentError, refetch } = useQuery(GET_COMMENTS, { variables: { postId: props.post?.id } });
+
+    function addComment() {
+        submitComment().then((r) => {
+            setComment('');
+        });
+        refetch();
+    }
+
+    useEffect(() => {
+        if (commentData) {
+            setComments(commentData.post.comments);
+        }
+    }, [commentData]);
+
+    useEffect(() => {
+        console.log(loading, data, error)
+    }, [loading, data, error]);
+
+    // useEffect(() => {
+    //     console.log(props.post)
+    // }, [props.post]);
+
     // const [submitCommentVote, {loading: loadingVote}] = useMutation(SUBMIT_COMMENT_VOTE, { variables: { commentId: props.comment?.id, vote: vote === 1 ? 'up' : 'down' } });
 
     // function upvote() {
@@ -41,18 +98,6 @@ export default function CommentView(props) {
     //     setVote(-1);
     //     submitCommentVote();
     // }
-
-    function addComment() {
-        submitComment().then((r) => {
-            setComment('');
-        });
-        props.refetch();
-    }
-
-    // useEffect(() => {
-    //     console.log(props.post)
-    // }, [props.post]);
-
     function renderComment(comment) {
 
         return (
@@ -93,7 +138,7 @@ export default function CommentView(props) {
                 </Typography>
                 <Stack direction={'column'} spacing={1} style={{ marginTop: '5px' }}>
                     {
-                        props.post.comments?.map(comment => {
+                        comments.map(comment => {
                             return renderComment(comment);
                         })
                     }
