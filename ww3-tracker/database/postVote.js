@@ -35,9 +35,7 @@ class PostVoteAPI {
         }
     }
 
-    async submitPostVote(args) {
-        console.log("username " + args.user);
-    
+    async submitPostVote(args) {    
         const text = 'INSERT INTO post_votes(username, post_id, vote) VALUES($1, $2, $3) RETURNING *';
         const values = [args.user, args.postId, args.vote];
     
@@ -49,7 +47,20 @@ class PostVoteAPI {
             console.error(e.stack);
             return { success: false, message: "Internal server error." };
         }
-      }
+    }
+
+    async deletePostVote(args) {    
+        const text = 'DELETE FROM post_votes WHERE username = $1 AND post_id = $2;';
+        const values = [args.user, args.postId];
+    
+        try {
+            await client.query(text, values);
+            return { success: true, message: "ok" };
+        } catch (e) {
+            console.error(e.stack);
+            return { success: false, message: "Internal server error." };
+        }
+    }
   
 }
 

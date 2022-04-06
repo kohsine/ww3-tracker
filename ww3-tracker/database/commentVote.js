@@ -35,9 +35,7 @@ class CommentVoteAPI {
         }
     }
 
-    async submitCommentVote(args) {
-        console.log("username " + args.user);
-    
+    async submitCommentVote(args) {    
         const text = 'INSERT INTO comment_votes(username, comment_id, vote) VALUES($1, $2, $3) RETURNING *';
         const values = [args.user, args.commentId, args.vote];
     
@@ -45,6 +43,19 @@ class CommentVoteAPI {
             const res = await client.query(text, values);
             const vote = this.voteReducer(res.rows[0]);
             return { success: true, message: "ok", commentVoteId: vote.id };
+        } catch (e) {
+            console.error(e.stack);
+            return { success: false, message: "Internal server error." };
+        }
+    }
+
+    async deleteCommentVote(args) {    
+        const text = 'DELETE FROM comment_votes WHERE username = $1 AND comment_id = $2;';
+        const values = [args.user, args.commentId];
+    
+        try {
+            await client.query(text, values);
+            return { success: true, message: "ok" };
         } catch (e) {
             console.error(e.stack);
             return { success: false, message: "Internal server error." };

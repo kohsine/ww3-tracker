@@ -64,4 +64,12 @@ export const Mutation = {
     const submitPostVoteResponse = await dataSources.postVoteAPI.submitPostVote({ ...args, user });
     return submitPostVoteResponse;
   },
+  deleteCommentVote: async (_, args, { dataSources, user }) => {
+    const deleteVoteResponse = await dataSources.commentVoteAPI.deleteCommentVote({ ...args, user });
+    return deleteVoteResponse;
+  },
+  deletePostVote: async (_, args, { dataSources, user }) => {
+    const deleteVoteResponse = await dataSources.postVoteAPI.deletePostVote({ ...args, user });
+    return deleteVoteResponse;
+  },
 };

@@ -36,6 +36,14 @@ const typeDefs = gql`
       vote: String!,
       postId: ID!
     ): SubmitPostVoteResponse!
+
+    deleteCommentVote(
+      commentId: ID!
+    ): DeleteVoteResponse!
+
+    deletePostVote(
+      postId: ID!
+    ): DeleteVoteResponse!
   }
 
   type User {
@@ -110,6 +118,11 @@ const typeDefs = gql`
     success: Boolean!
     message: String
     postVoteId: ID
+  }
+
+  type DeleteVoteResponse {
+    success: Boolean!
+    message: String
   }
 `;
 
