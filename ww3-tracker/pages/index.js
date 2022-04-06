@@ -22,11 +22,26 @@ const GET_POSTS = gql`
             description
             lng
             lat
-            url
             author {
-                username
+              username
             }
-        }
+            url
+            comments {
+              id
+              content
+              author {
+                username
+              }
+              post {
+                id
+              }
+              date
+              upvotes
+              downvotes
+            }
+            upvotes
+            downvotes
+          }
     }
 `;
 
@@ -132,8 +147,8 @@ export default function Index({ user }) {
                                             <Map style={{ width: '100%', position: 'relative', height: '100%' }} onMapClick={setSelectedCoords} points={points} onMarkerClick={setSelectedPost} />
 
                                         </Stack>
-                                        {selectedPost && <ContentView post={selectedPost} username={username} />}
-                                        {selectedPost && <CommentView post={selectedPost} username={username} />}
+                                        {selectedPost && <ContentView post={selectedPost} username={username} refetch={refetch}/>}
+                                        {selectedPost && <CommentView post={selectedPost} username={username} refetch={refetch}/>}
 
                                         <SubmitContent open={createIsOpen} onClose={() => { setCreateIsOpen(false); refetch(); }} coords={selectedCoords} />
                                     </>
