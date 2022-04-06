@@ -16,7 +16,6 @@ const apolloServer = new ApolloServer({ typeDefs, resolvers, dataSources: () => 
     postVoteAPI: new PostVoteAPI()
   }),
   context: ({ req: MicroRequest, res: ServerResponse }) => {
-    return { user: 'electric' };
     const user = MicroRequest.cookies.username;
     const token = MicroRequest.cookies.token;
     if (!token) return null;
