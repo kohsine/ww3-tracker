@@ -36,7 +36,7 @@ class CommentAPI {
   }
 
   async getCommentsByPostId({ postId }) {
-    const text = 'SELECT * FROM comments WHERE postId = $1;';
+    const text = 'SELECT * FROM comments WHERE postId = $1 ORDER BY created_date DESC;';
     const values = [postId];
     try {
       const res = await client.query(text, values);
