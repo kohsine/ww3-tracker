@@ -12,8 +12,8 @@ export const Query = {
 };
 
 export const Post = {
-  comments: async (post, _, { dataSources }) =>
-    dataSources.commentAPI.getCommentsByPostId({ postId: post.id }),
+  comments: async (post, { pageSize, offset }, { dataSources }) =>
+    dataSources.commentAPI.getCommentsByPostId({ postId: post.id, pageSize, offset }),
   author: async (post, _, { dataSources }) =>
     dataSources.userAPI.getUserByUsername({ username: post.author }),
   upvotes: async (post, _, { dataSources }) =>

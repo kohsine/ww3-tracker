@@ -35,9 +35,9 @@ class CommentAPI {
     }
   }
 
-  async getCommentsByPostId({ postId }) {
-    const text = 'SELECT * FROM comments WHERE postId = $1 ORDER BY created_date DESC;';
-    const values = [postId];
+  async getCommentsByPostId(args) {
+    const text = 'SELECT * FROM comments WHERE postId = $1 ORDER BY created_date DESC LIMIT $2 OFFSET $3;';
+    const values = [args.postId, args.pageSize, args.offset];
     try {
       const res = await client.query(text, values);
       return Promise.all(

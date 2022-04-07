@@ -58,7 +58,10 @@ const typeDefs = gql`
     lat: Float
     author: User!
     url: String!
-    comments: [Comment!]!
+    comments(
+      pageSize: Int!
+      offset: Int!
+    ): [Comment!]!
     upvotes: Int!
     downvotes: Int!
   }
