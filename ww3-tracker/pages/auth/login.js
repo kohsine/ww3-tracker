@@ -21,9 +21,7 @@ export default function Login(props) {
 
     const handleLoginSubmit = async (event) => {
         event.preventDefault();
-        console.log(formValues);
         const form_username = event.currentTarget.username.value;
-        console.log("form username " + form_username);
         const password = event.currentTarget.password.value;
         const res = await fetch('/api/login', {
             method: 'POST',
@@ -35,19 +33,13 @@ export default function Login(props) {
         const body = await res.json();
         const token = getCookie('token');
         const username = getCookie('username');
-        console.log("res " + JSON.stringify(res));
-        console.log("token " + token);
-        console.log("username " + username);
-        console.log("status " + res.status);
 
         if (res.status == 404) {
-            console.log("Username not found.");
             setLoginError("Username not found.")
             return;
         }
 
         if (res.status == 403) {
-            console.log("Incorrect password.")
             setLoginError("Incorrect password.")
             return;
         }
@@ -57,9 +49,7 @@ export default function Login(props) {
 
     const handleSignupSubmit = async (event) => {
         event.preventDefault();
-        console.log(formValues);
         const form_username = event.currentTarget.username.value;
-        console.log("form username " + form_username);
         const password = event.currentTarget.password.value;
         const res = await fetch('/api/signup', {
             method: 'POST',
@@ -71,13 +61,8 @@ export default function Login(props) {
         const body = await res.json();
         const token = getCookie('token');
         const username = getCookie('username');
-        console.log("res " + JSON.stringify(res));
-        console.log("token " + token);
-        console.log("username " + username);
-        console.log("status " + res.status);
 
         if (res.status != 200) {
-            console.log(body.error);
             setSignupError(body.error);
             return;
         }
