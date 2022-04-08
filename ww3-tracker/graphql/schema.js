@@ -62,6 +62,7 @@ const typeDefs = gql`
       pageSize: Int!
       offset: Int!
     ): [Comment!]!
+    numOfComments: Int!
     upvotes: Int!
     downvotes: Int!
   }

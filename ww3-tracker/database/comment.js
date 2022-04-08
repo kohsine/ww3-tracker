@@ -48,6 +48,17 @@ class CommentAPI {
     }
   }
 
+  async getNumOfCommentsByPostId(args) {
+    const text = 'SELECT COUNT(*) FROM comments WHERE postId = $1;';
+    const values = [args.postId];
+    try {
+      const { rows } = await client.query(text, values);
+      return rows[0].count;
+    } catch (e) {
+      console.error(e.stack)
+    }
+  }
+
   async submitComment(args) {
     console.log("username " + args.user);
 

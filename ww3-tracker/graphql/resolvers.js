@@ -19,7 +19,9 @@ export const Post = {
   upvotes: async (post, _, { dataSources }) =>
     dataSources.postVoteAPI.getVoteCountByPost({ postId: post.id, voteType: 'up' }),
   downvotes: async (post, _, { dataSources }) =>
-    dataSources.postVoteAPI.getVoteCountByPost({ postId: post.id, voteType: 'down' })
+    dataSources.postVoteAPI.getVoteCountByPost({ postId: post.id, voteType: 'down' }),
+  numOfComments: async (post, _, { dataSources }) =>
+    dataSources.commentAPI.getNumOfCommentsByPostId({ postId: post.id }),
 };
 
 export const PostVote = {
