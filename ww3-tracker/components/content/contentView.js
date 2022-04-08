@@ -28,12 +28,24 @@ const MUTATION = gql`
         }
     }
 `
+
+const DELETE_VOTE = gql`
+    mutation($postId: ID!) {
+        deletePostVote(postId: $postId) {
+            success
+            message
+        }
+    }
+`
+
 export default function ContentView(props) {
     const [preview, setPreview] = useState({});
     const [vote, setVote] = useState(0); // 0 = no vote, 1 = upvote, -1 = downvote
 
     const { loading, error, data, refetch } = useQuery(QUERY, { variables: { url: props.post?.url, postId: props.post?.id } });
+    const [sendUp] = useMutation(MUTATION, { variables: { postId: props.post?.id, vote: 'up' } });
     const [sendDown] = useMutation(MUTATION, { variables: { postId: props.post?.id, vote: 'down' } });
+    const [deleteVote] = useMutation(DELETE_VOTE, { variables: { postId: props.post?.id } });
 
     useEffect(() => {
         if (data) {
@@ -54,18 +66,40 @@ export default function ContentView(props) {
         refetch();
     }, [props.post]);
 
-    const [sendUp] = useMutation(MUTATION, { variables: { postId: props.post?.id, vote: 'up' } });
     function upvote() {
-
-        if (vote) return;
-        sendUp();
-        setVote(1);
+        if (vote === 1) {
+            deleteVote().then(() => {
+                setVote(0);
+            });
+        } else if (vote === -1) {
+            deleteVote().then(() => {
+                sendUp().then(() => {
+                    setVote(1);
+                });
+            });
+        }else {
+            sendUp().then(() => {
+                setVote(1);
+            });
+        }
     }
 
     function downvote() {
-        if (vote) return;
-        sendDown();
-        setVote(-1);
+        if (vote === -1) {
+            deleteVote().then(() => {
+                setVote(0);
+            });
+        } else if (vote === 1) {
+            deleteVote().then(() => {
+                sendDown().then(() => {
+                    setVote(-1);
+                });
+            });
+        } else {
+            sendDown().then(() => {
+                setVote(-1);
+            });
+        }
     }
 
     return (
