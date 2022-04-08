@@ -1,4 +1,4 @@
-import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, ButtonGroup, Stack, CircularProgress, Pagination, TextField, Button } from '@mui/material'
+import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, ButtonGroup, Stack, CircularProgress, Pagination, TextField, Button, List, ListItem } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import { BiUpvote, BiDownvote } from 'react-icons/bi'
@@ -16,9 +16,9 @@ const SUBMIT_COMMENT = gql`
     `
 
 const GET_COMMENTS = gql`
-    query($postId: ID!) {
+    query($postId: ID!, $pageSize: Int!, $offset: Int!) {
         post(id: $postId) {
-          comments {
+          comments(pageSize: $pageSize, offset: $offset) {
             id
             content
             author {
@@ -28,43 +28,20 @@ const GET_COMMENTS = gql`
             upvotes
             downvotes
           }
+            numOfComments
         }
       }
       
 `
 
-// const SUBMIT_COMMENT_VOTE = gql`
-//     mutation($commentId: ID!, $vote: String!) {
-//         submitCommentVote(commentId: $commentId, vote: $vote) {
-//             success
-//             message
-//             commentVoteId
-//         }
-//     }
-//     `
-
 export default function CommentView(props) {
-    // const [vote, setVote] = useState(0); // 0 = no vote, 1 = upvote, -1 = downvote
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
-
-    // useEffect(() => {
-    //     if (props.post.comments !== comments) 
-    //         setComments(props.post.comments);
-    // }, [props.post.comments]);
-
-    // useEffect(() => {
-    //     const post = props.data.posts.find(p => p.id === props.post.id);
-    //     console.log('ajdsfkljadskl', post)
-    //     if (post) {
-    //         setComments(post.comments);
-    //     }
-    // }, [props.data]);
-
-
+    const [page, setPage] = useState(0);
+    const [numPages, setNumPages] = useState(1);
 
     const [submitComment, { loading, data, error }] = useMutation(SUBMIT_COMMENT, { variables: { postId: props.post?.id, content: comment } });
-    const { data: commentData, loading: commentLoading, error: commentError, refetch } = useQuery(GET_COMMENTS, { variables: { postId: props.post?.id } });
+    const { data: commentData, loading: commentLoading, error: commentError, refetch } = useQuery(GET_COMMENTS, { variables: { postId: props.post?.id, pageSize: 10, offset: page * 10 } });
 
     function addComment() {
         submitComment().then((r) => {
@@ -76,57 +53,30 @@ export default function CommentView(props) {
     useEffect(() => {
         if (commentData) {
             setComments(commentData.post.comments);
+            setNumPages(Math.ceil(commentData.post.numOfComments / 10));
         }
     }, [commentData]);
 
-    useEffect(() => {
-        console.log(loading, data, error)
-    }, [loading, data, error]);
-
-    // useEffect(() => {
-    //     console.log(props.post)
-    // }, [props.post]);
-
-    // const [submitCommentVote, {loading: loadingVote}] = useMutation(SUBMIT_COMMENT_VOTE, { variables: { commentId: props.comment?.id, vote: vote === 1 ? 'up' : 'down' } });
-
-    // function upvote() {
-    //     setVote(1);
-    //     submitCommentVote();
-    // }
-
-    // function downvote() {
-    //     setVote(-1);
-    //     submitCommentVote();
-    // }
     function renderComment(comment) {
 
         return (
-            <Stack direction={'row'} alignItems="center" key={comment.id}>
-                {/* <ButtonGroup variant="outlined" orientation="vertical">
-                    <IconButton onClick={upvote} disabled={!props.username} >
-                        <AiOutlineCaretUp />
-                    </IconButton>
-                    <Box style={{ textAlign: 'center' }}>
-                        <Typography variant="body2">{(comment.upvotes - comment.downvotes) || 0}</Typography>
-                    </Box>
-                    <IconButton onClick={downvote} disabled={!props.username} >
-                        <AiOutlineCaretDown />
-                    </IconButton>
-                </ButtonGroup> */}
-                <Stack>
-                    <Stack direction="row" spacing={1}>
-                        <Typography variant="caption" color="textSecondary" component="p">
-                            {(new Date(parseInt(comment.date))).toLocaleDateString()}
-                        </Typography>
-                        <Typography variant="caption" component="p">
-                            {comment.author.username}
+            <ListItem key={comment.id}>
+                <Stack direction={'row'} alignItems="center">
+                    <Stack>
+                        <Stack direction="row" spacing={1}>
+                            <Typography variant="caption" color="textSecondary" component="p">
+                                {(new Date(parseInt(comment.date))).toLocaleDateString()}
+                            </Typography>
+                            <Typography variant="caption" component="p">
+                                {comment.author.username}
+                            </Typography>
+                        </Stack>
+                        <Typography variant="body2">
+                            {comment.content}
                         </Typography>
                     </Stack>
-                    <Typography variant="body2">
-                        {comment.content}
-                    </Typography>
                 </Stack>
-            </Stack>
+            </ListItem>
         )
     }
 
@@ -137,11 +87,13 @@ export default function CommentView(props) {
                     Comments
                 </Typography>
                 <Stack direction={'column'} spacing={1} style={{ marginTop: '5px' }}>
-                    {
-                        comments.map(comment => {
-                            return renderComment(comment);
-                        })
-                    }
+                    <List sx={{overflow: 'auto', maxHeight: '350px'}}>
+                        {
+                            comments.map(comment => {
+                                return renderComment(comment);
+                            })
+                        }
+                    </List>
                     <TextField disabled={loading} label="Add comment" variant="outlined" fullWidth multiline maxRows={4} value={comment} onChange={e => { setComment(e.target.value) }} />
                     <Button onClick={addComment} disabled={loading}>
                         Post
@@ -149,8 +101,14 @@ export default function CommentView(props) {
                 </Stack>
             </CardContent>
             <CardActions>
-
-                <Pagination />
+                <Pagination 
+                    page={page + 1}
+                    count={numPages}
+                    onChange={(e, newPage) => {
+                        setPage(newPage - 1);
+                        refetch();
+                    }}
+                />
             </CardActions>
         </Card>
     )
