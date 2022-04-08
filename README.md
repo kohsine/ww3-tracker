@@ -1,67 +1,49 @@
-# WW3-Tracker
+# WW3 Tracker
 
-## Team members
----
-- Ian Gu
-- Kevin Oh
+## Project URL
 
-## Web application
----
-This application allows users to submit multimedia (images, videos, news articles, etc) and allows users to add an optional corresponding location on a map of Ukraine. The content on this site is user driven, and thus users can report content for different reasons, and moderators can review the reports and make appropriate decisions. Users may also upvote/downvote posts, and sort/filter posts.
+https://worldwar3tracker.com/
 
-## Beta features
----
-- User authentication (create an account, login, signout)
-- Submission of content
-- Content is organized on map
-- Ability to report content
-- Ability to upvote / downvote content
+## Project Video URL 
 
-## Final features
----
-- Preview content on map
-- Custom icons for map marker
-- Content may be filtered / sorted
-- Moderators can control content
+**Task:** Provide the link to your youtube video. Please make sure the link works. 
 
-## Tech stack
----
-### Frontend
-- React.js
-- Material UI
+## Project Description
 
-### Backend
-- Express.js
-- GraphQL
-- MongoDB
-- AWS S3
+**Task:** Provide a detailed description of your app
 
-### Deploy
-- Heroku for backend
-- CloudFlare for frontend
+## Development
 
-## Top 5 technical challenges
----
-- Finding a geographic map solution for React.
+**Task:** Leaving deployment aside, explain how the app is built. Please describe the overall code design and be specific about the programming languages, framework, libraries and third-party api that you have used. 
 
-   At first glance, it is unclear whether many libraries are suitable for our needs. We may have to experiment, or even build our own solution to support everything we need. More detail below.
+Starting from the client side, every page is rendered using React. There are two main libraries we use in the frontend. Google map react is responsible for basic map functionalities like zooming and dragging and also exposing an API so that we can add additional elements on the map like points. Material UI is the CSS library we use that is based on Google's material theme. All of the http requests from the client to the server are done using one GraphQL endpoint, with the exception of login, signup, and file upload. We use Apollo Client as the GraphQL library in the frontend which we use to send GraphQL queries to the server. 
 
-- How to retrieve coordinates from clicking on the map?
+Once the GraphQL query makes it to the server, it is processed by Next.js which is what we are using as our server framework. Notice how our project does not explicitly define endpoints, and that is because Next.js maps endpoints to the folder structure. The GraphQL server is defined initially at pages/api/graphql.js. We then use Apollo Server to process the GraphQL query and we have defined a schema and resolvers to communicate with the database. The schema is located under graphql/schema.js and the resolver is located under graphql/resolvers.js. The resolver then communicates with the database using the API we have defined under database/. Finally Apollo Server sends the retrieved data back to the client which is then processed by Apollo Client and displayed using React.
 
-   This seems trivial at first, but there is little documentation in the current library. If not supported, we may have to look around.
+We are using PostgreSQL as our database and it is initialized using docker and docker-compose which is all contained under the folder docker-database/.
 
-- How to filter posts based on the current view of the map.
-   
-   If you move the map around or zoom in, some markers will no longer be visible. These posts should then be hidden. How will the math work to filter out certain geographic coordinates?
+You may have noticed a data-gen folder outside the ww3-tracker folder and this is a separate project that we use to generate random geographical coordinates containing random unsplash photos.
 
-- How to deal with too many markers overlapping?
+## Deployment
 
-   If too many markers are on the same area of the map, should they be combined into a larger marker? If so, much research should be done on how the UI should work then. We have to consider things like zooming in, where then the overlap should lessen.
+**Task:** Explain how you have deployed your application. 
 
-- How should multimedia be treated?
+## Maintenance
 
-   The application allows users to submit both photos and videos. How should they be displayed in a consistent and aesthetic manner? What if the aspect ratios are different?
+**Task:** Explain how you monitor your deployed app to make sure that everything is working as expected.
 
-- Multimedia preview
+## Challenges
 
-   Hovering over a marker gives you a preview of the content. How will this affect the map? Will the design need to be responsive?
+**Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
+
+1.
+2.
+3. 
+
+## Contributions
+
+**Task:** Describe the contribution of each team member to the project. Please provide the full name of each team member (but no student number). 
+
+# One more thing? 
+
+**Task:** Any additional comment you want to share with the course staff? 

@@ -18,7 +18,7 @@ const apolloServer = new ApolloServer({ typeDefs, resolvers, dataSources: () => 
   context: ({ req: MicroRequest, res: ServerResponse }) => {
     const user = MicroRequest.cookies.username;
     const token = MicroRequest.cookies.token;
-    if (!token) return null;
+    if (!token) return { user: null };
     // verify a token symmetric - synchronous
     var jwt = require('jsonwebtoken');
     var decoded = jwt.verify(token, process.env.JWT_SECRET);
