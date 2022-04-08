@@ -87,7 +87,7 @@ export default function CommentView(props) {
                     Comments
                 </Typography>
                 <Stack direction={'column'} spacing={1} style={{ marginTop: '5px' }}>
-                    <List sx={{overflow: 'auto', maxHeight: '350px'}}>
+                    <List sx={{ overflow: 'auto', maxHeight: '350px' }}>
                         {
                             comments.map(comment => {
                                 return renderComment(comment);
@@ -101,7 +101,7 @@ export default function CommentView(props) {
                 </Stack>
             </CardContent>
             <CardActions>
-                <Pagination 
+                <Pagination
                     page={page + 1}
                     count={numPages}
                     onChange={(e, newPage) => {

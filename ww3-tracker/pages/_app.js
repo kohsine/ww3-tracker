@@ -11,6 +11,8 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";
 
 const client = new ApolloClient({
     //   uri: 'http://localhost:80/api/graphql',
@@ -19,6 +21,12 @@ const client = new ApolloClient({
     }),
     cache: new InMemoryCache()
 });
+
+Sentry.init({
+    dsn: "https://86a6d3fa5c994e3098d76c746c137a06@o1195904.ingest.sentry.io/6319026",
+    integrations: [new BrowserTracing()],
+    tracesSampleRate: 1.0,
+  });
 
 function MyApp({ Component, pageProps }) {
     return (

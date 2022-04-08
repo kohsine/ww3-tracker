@@ -28,7 +28,9 @@ You may have noticed a data-gen folder outside the ww3-tracker folder and this i
 
 ## Deployment
 
-**Task:** Explain how you have deployed your application. 
+**Task:** We have deployed our application on Amazon Web Services. Specifically, it is running on a EC2 instance with Ubuntu. The database is dockerized which makes it easy to deploy on any machine. On AWS, we are also using Route54 which points to our custom (domain) name servers, and also an S3 bucket which stores our content.
+
+On the VM itself, we are running an nginx reverse proxy which redirects outside requests over https from port 80 to PM2 process which runs on port 3000. We use PM2 to keep the application running at all times, and also easily manage the process.
 
 ## Maintenance
 
