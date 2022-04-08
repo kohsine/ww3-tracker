@@ -57,7 +57,6 @@ export default function SubmitContent(props) {
             const fileData = new FormData();
             fileData.append('theFiles', file);
             ({ url_meta } = await submitFile(fileData));
-            console.log("url meta " + JSON.stringify(url_meta));
         }
 
         const res = await submitPost({
@@ -91,7 +90,6 @@ export default function SubmitContent(props) {
 
         const response = await axios.post('/api/upload', formData, config);
 
-        console.log('response', response.data);
         return response.data;
     };
 

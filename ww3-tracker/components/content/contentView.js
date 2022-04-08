@@ -51,10 +51,6 @@ export default function ContentView(props) {
     }, [loading]);
 
     useEffect(() => {
-        console.log(error)
-    }, [error]);
-
-    useEffect(() => {
         refetch();
     }, [props.post]);
 

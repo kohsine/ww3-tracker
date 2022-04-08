@@ -49,7 +49,6 @@ export default function Index({ user }) {
     }, []);
 
     useEffect(() => {
-        console.log(data)
         if (data) {
             const posts = data.posts;
             const pts = posts.map(post => (
