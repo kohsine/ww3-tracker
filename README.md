@@ -12,6 +12,8 @@ https://worldwar3tracker.com/
 
 **Task:** Provide a detailed description of your app
 
+Our app is a content sharing platform with a focus on geographic location. 
+
 ## Development
 
 **Task:** Leaving deployment aside, explain how the app is built. Please describe the overall code design and be specific about the programming languages, framework, libraries and third-party api that you have used. 
@@ -36,13 +38,19 @@ You may have noticed a data-gen folder outside the ww3-tracker folder and this i
 
 **Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
 
-1.
-2.
-3. 
+1. 
+2. GraphQL
+3. Docker
 
 ## Contributions
 
 **Task:** Describe the contribution of each team member to the project. Please provide the full name of each team member (but no student number). 
+
+Kevin Oh:
+1. Project setup
+2. Backend
+
+Ian Gu:
 
 # One more thing? 
 
