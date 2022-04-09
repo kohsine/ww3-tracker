@@ -51,26 +51,32 @@ export const CommentVote = {
 
 export const Mutation = {
   submitPost: async (_, args, { dataSources, user }) => {
+    if (!user) return null;
     const submitPostResponse = await dataSources.postAPI.submitPost({ ...args, user });
     return submitPostResponse;
   },
   submitComment: async (_, args, { dataSources, user }) => {
+    if (!user) return null;
     const submitCommentResponse = await dataSources.commentAPI.submitComment({ ...args, user });
     return submitCommentResponse;
   },
   submitCommentVote: async (_, args, { dataSources, user }) => {
+    if (!user) return null;
     const submitCommentVoteResponse = await dataSources.commentVoteAPI.submitCommentVote({ ...args, user });
     return submitCommentVoteResponse;
   },
   submitPostVote: async (_, args, { dataSources, user }) => {
+    if (!user) return null;
     const submitPostVoteResponse = await dataSources.postVoteAPI.submitPostVote({ ...args, user });
     return submitPostVoteResponse;
   },
   deleteCommentVote: async (_, args, { dataSources, user }) => {
+    if (!user) return null;
     const deleteVoteResponse = await dataSources.commentVoteAPI.deleteCommentVote({ ...args, user });
     return deleteVoteResponse;
   },
   deletePostVote: async (_, args, { dataSources, user }) => {
+    if (!user) return null;
     const deleteVoteResponse = await dataSources.postVoteAPI.deletePostVote({ ...args, user });
     return deleteVoteResponse;
   },
