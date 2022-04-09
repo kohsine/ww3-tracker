@@ -6,17 +6,13 @@ https://worldwar3tracker.com/
 
 ## Project Video URL 
 
-**Task:** Provide the link to your youtube video. Please make sure the link works. 
+https://youtu.be/9O1ToE8xet4
 
 ## Project Description
 
-**Task:** Provide a detailed description of your app
-
-Our app is a content sharing platform with a focus on geographic location. 
+Our app is a content sharing platform with a focus on geographic location. Users may pick a place on the map and share content in the form of a link (articles, videos, etc), or upload their own files (photos, videos, etc). Users can then view other submissions by clicking a marker on the map. A preview (only for photos and links) of the content is shown, which the user can upvote/downvote, or comment on. Users may also click the post which will take them to the full link/article/photo. The aim of the application is to help track the current events in Ukraine, and see the developments throughout the city.
 
 ## Development
-
-**Task:** Leaving deployment aside, explain how the app is built. Please describe the overall code design and be specific about the programming languages, framework, libraries and third-party api that you have used. 
 
 Starting from the client side, every page is rendered using React. There are two main libraries we use in the frontend. Google map react is responsible for basic map functionalities like zooming and dragging and also exposing an API so that we can add additional elements on the map like points. Material UI is the CSS library we use that is based on Google's material theme. All of the http requests from the client to the server are done using one GraphQL endpoint, with the exception of login, signup, and file upload. We use Apollo Client as the GraphQL library in the frontend which we use to send GraphQL queries to the server. 
 
@@ -28,32 +24,27 @@ You may have noticed a data-gen folder outside the ww3-tracker folder and this i
 
 ## Deployment
 
-**Task:** We have deployed our application on Amazon Web Services. Specifically, it is running on a EC2 instance with Ubuntu. The database is dockerized which makes it easy to deploy on any machine. On AWS, we are also using Route54 which points to our custom (domain) name servers, and also an S3 bucket which stores our content.
+We have deployed our application on Amazon Web Services. Specifically, it is running on a EC2 instance with Ubuntu. The database is dockerized which makes it easy to deploy on any machine. On AWS, we are also using Route54 which points to our custom (domain) name servers, and also an S3 bucket which stores our content.
 
 On the VM itself, we are running an nginx reverse proxy which redirects outside requests over https from port 80 to PM2 process which runs on port 3000. We use PM2 to keep the application running at all times, and also easily manage the process.
 
 ## Maintenance
 
-**Task:** Explain how you monitor your deployed app to make sure that everything is working as expected.
+We have sentry alerts set up so whenever there are errors in the app, they are logged and we are notified in real time. Additionally, maintenance is easy with PM2. All we have to do is ssh into the VM, and run `pm2 restart appName`
 
 ## Challenges
 
-**Task:** What is the top 3 most challenging things that you have learned/developed for you app? Please restrict your answer to only three items. 
 
-1. 
-2. GraphQL
-3. Docker
+1. Map: implementing the map was very difficult. Notably the library we used was unofficial and we ran into many compatibility issues with other libraries such as icon libraries. Also the clustering of markers was quite complicated and hard to understand.
+2. GraphQL: it was our first time using the technology so we had to learn its many intricacies.
+3. Docker: we ran into some logistical errors while deploying which took us a while to figure out.
 
 ## Contributions
-
-**Task:** Describe the contribution of each team member to the project. Please provide the full name of each team member (but no student number). 
 
 Kevin Oh:
 1. Project setup
 2. Backend
 
 Ian Gu:
-
-# One more thing? 
-
-**Task:** Any additional comment you want to share with the course staff? 
+1. Frontend
+2. Deployment

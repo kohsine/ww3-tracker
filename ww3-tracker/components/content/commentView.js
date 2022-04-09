@@ -51,6 +51,10 @@ export default function CommentView(props) {
     }
 
     useEffect(() => {
+        setPage(0);
+    }, [props.post]);
+
+    useEffect(() => {
         if (commentData) {
             setComments(commentData.post.comments);
             setNumPages(Math.ceil(commentData.post.numOfComments / 10));
