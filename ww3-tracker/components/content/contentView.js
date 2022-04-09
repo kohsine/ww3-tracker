@@ -41,6 +41,7 @@ const DELETE_VOTE = gql`
 export default function ContentView(props) {
     const [preview, setPreview] = useState({});
     const [vote, setVote] = useState(0); // 0 = no vote, 1 = upvote, -1 = downvote
+    const [totalVote, setTotalVote] = useState(0);
 
     const { loading, error, data, refetch } = useQuery(QUERY, { variables: { url: props.post?.url, postId: props.post?.id } });
     const [sendUp] = useMutation(MUTATION, { variables: { postId: props.post?.id, vote: 'up' } });
@@ -52,7 +53,6 @@ export default function ContentView(props) {
             setPreview(data.preview);
             if (data.postVote) {
                 if (data.postVote.vote === 'up') {
-                    console.log('up')
                     setVote(1);
                 } else if (data.postVote.vote === 'down') {
                     setVote(-1);
@@ -64,6 +64,7 @@ export default function ContentView(props) {
     }, [data]);
 
     useEffect(() => {
+        setTotalVote(props.post.upvotes - props.post.downvotes);
         refetch();
     }, [props.post]);
 
@@ -72,16 +73,19 @@ export default function ContentView(props) {
             deleteVote().then(() => {
                 setVote(0);
             });
+            setTotalVote(totalVote - 1);
         } else if (vote === -1) {
             deleteVote().then(() => {
                 sendUp().then(() => {
                     setVote(1);
                 });
             });
+            setTotalVote(totalVote + 2);
         }else {
             sendUp().then(() => {
                 setVote(1);
             });
+            setTotalVote(totalVote + 1);
         }
     }
 
@@ -90,16 +94,19 @@ export default function ContentView(props) {
             deleteVote().then(() => {
                 setVote(0);
             });
+            setTotalVote(totalVote + 1);
         } else if (vote === 1) {
             deleteVote().then(() => {
                 sendDown().then(() => {
                     setVote(-1);
                 });
             });
+            setTotalVote(totalVote - 2);
         } else {
             sendDown().then(() => {
                 setVote(-1);
             });
+            setTotalVote(totalVote - 1);
         }
     }
 
@@ -132,7 +139,7 @@ export default function ContentView(props) {
                             <BiUpvote />
                         </IconButton>
                         <Box style={{ textAlign: 'center' }}>
-                            <Typography variant="body2">{(props.post?.upvotes - props.post?.downvotes) || 0 + vote}</Typography>
+                            <Typography variant="body2">{totalVote}</Typography>
                         </Box>
                         <IconButton onClick={downvote} disabled={!props.username} color={vote === -1 ? "inherit" : "default"}>
                             <BiDownvote />
