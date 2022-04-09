@@ -26,6 +26,8 @@ const GET_POSTS = gql`
               username
             }
             url
+            upvotes
+            downvotes
           }
     }
 `;
