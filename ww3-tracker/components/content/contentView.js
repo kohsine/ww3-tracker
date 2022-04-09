@@ -51,16 +51,17 @@ export default function ContentView(props) {
         if (data) {
             setPreview(data.preview);
             if (data.postVote) {
-                setVote(data.postVote.vote === 'up' ? 1 : -1);
+                if (data.postVote.vote === 'up') {
+                    console.log('up')
+                    setVote(1);
+                } else if (data.postVote.vote === 'down') {
+                    setVote(-1);
+                }
             } else {
                 setVote(0);
             }
         }
     }, [data]);
-
-    useEffect(() => {
-        setVote(0);
-    }, [loading]);
 
     useEffect(() => {
         refetch();
