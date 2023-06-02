@@ -19,29 +19,29 @@ export default function Login(props) {
     });
   };
 
-  const handleLoginSubmit = async (event) => {
+  const handleLoginSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formUsername = event.currentTarget.username.value;
     const password = event.currentTarget.password.value;
-    const res = await fetch("/api/login", {
+    fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({ form_username: formUsername, password }),
+    }).then((res) => {
+      if (res.status === 404) {
+        setLoginError("Username not found.");
+        return;
+      }
+
+      if (res.status === 403) {
+        setLoginError("Incorrect password.");
+        return;
+      }
+
+      router.push("/");
     });
-
-    if (res.status === 404) {
-      setLoginError("Username not found.");
-      return;
-    }
-
-    if (res.status === 403) {
-      setLoginError("Incorrect password.");
-      return;
-    }
-
-    router.push("/");
   };
 
   const handleSignupSubmit = async (event) => {

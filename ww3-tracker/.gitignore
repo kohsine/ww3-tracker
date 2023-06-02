@@ -39,3 +39,6 @@ public/*
 
 deploy.sh
 credentials
+
+# Sentry Auth Token
+.sentryclirc
