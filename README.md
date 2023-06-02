@@ -2,9 +2,9 @@
 
 ## Project URL
 
-https://worldwar3tracker.com/
+https://tww3.com/
 
-## Project Video URL 
+## Project Video URL
 
 https://youtu.be/9O1ToE8xet4
 
@@ -14,7 +14,7 @@ The app is a content sharing platform with a focus on geographic location. Users
 
 ## Development
 
-Starting from the client side, every page is rendered using React. There are two main libraries we use in the frontend. Google map react is responsible for basic map functionalities like zooming and dragging and also exposing an API so that we can add additional elements on the map like points. Material UI is the CSS library we use that is based on Google's material theme. All of the http requests from the client to the server are done using one GraphQL endpoint, with the exception of login, signup, and file upload. Apollo Client is used as the GraphQL implementation in the frontend which we use to send GraphQL queries to the server. 
+Starting from the client side, every page is rendered using React. There are two main libraries we use in the frontend. Google map react is responsible for basic map functionalities like zooming and dragging and also exposing an API so that we can add additional elements on the map like points. Material UI is the CSS library we use that is based on Google's material theme. All of the http requests from the client to the server are done using one GraphQL endpoint, with the exception of login, signup, and file upload. Apollo Client is used as the GraphQL implementation in the frontend which we use to send GraphQL queries to the server.
 
 Once the GraphQL query makes it to the server, it is processed by Next.js. Notice how our project does not explicitly define endpoints, and that is because Next.js maps endpoints to the folder structure. The GraphQL server is defined initially at pages/api/graphql.js. Apollo Server then processes the GraphQL query and a schema and resolvers are defined to communicate with the database. The schema is located under graphql/schema.js and the resolver is located under graphql/resolvers.js. The resolver then communicates with the database using the API defined under database/. Finally Apollo Server sends the retrieved data back to the client which is then processed by Apollo Client and displayed using React.
 
@@ -31,13 +31,3 @@ The VM is running an nginx reverse proxy which redirects outside requests over h
 ## Maintenance
 
 Sentry alerts set up so whenever there are errors in the app, they are logged and notifications are sent in real time.
-
-## Contributions
-
-Kevin Oh:
-1. Project setup
-2. Backend
-
-Ian Gu:
-1. Frontend
-2. Deployment
