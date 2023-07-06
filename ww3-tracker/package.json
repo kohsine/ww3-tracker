@@ -1,13 +1,12 @@
 {
   "private": true,
   "scripts": {
-    "dev": "docker-compose --env-file ./.env -f ./docker-database/docker-compose.yml up -d  && next",
-    "dev1": "next",
+    "dev": "next",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "db-reset": "docker-compose -f ./docker-database/docker-compose.yml down && docker volume prune --force && docker-compose -f ./docker-database/docker-compose.yml build",
-    "db-start": "docker compose -f ./docker-database/docker-compose.yml up",
+    "db-start": "docker compose up db",
     "compile": "graphql-codegen",
     "watch": "graphql-codegen -w"
   },

@@ -21,7 +21,9 @@ interface Props {
       [name: string]: any;
     } | null>
   >;
-  onMapClick: any;
+  onMapClick: React.Dispatch<
+    React.SetStateAction<{ lat: number; lng: number } | null>
+  >;
   style: any;
   points: any;
 }

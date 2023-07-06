@@ -36,7 +36,10 @@ const GET_POSTS = gql(`
 export default function Index({ user }) {
   const [username, setUsername] = useState("");
   const [createIsOpen, setCreateIsOpen] = useState(false);
-  const [selectedCoords, setSelectedCoords] = useState(null);
+  const [selectedCoords, setSelectedCoords] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
   const [selectedPost, setSelectedPost] = useState<{
     [name: string]: any;
   } | null>(null);
@@ -147,7 +150,7 @@ export default function Index({ user }) {
             height="70vh"
           >
             <Stack direction="column" width="100%" height="100%" spacing={1}>
-              {username ? (
+              {username && selectedCoords != null ? (
                 <Button
                   size="medium"
                   id="create"
@@ -158,6 +161,10 @@ export default function Index({ user }) {
                   }}
                 >
                   Create New Post
+                </Button>
+              ) : selectedCoords == null && username ? (
+                <Button size="medium" variant="outlined">
+                  Click on the map to post
                 </Button>
               ) : (
                 <Button

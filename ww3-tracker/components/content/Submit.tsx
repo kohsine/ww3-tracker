@@ -152,11 +152,11 @@ export default function SubmitContent(props) {
       <DialogContent>
         <DialogContentText marginBottom={3}>
           Choose a summarizing title and make your description descriptive
-          (refrain from using obscenity unless it`&apos;`s contextual). Be sure
-          to give context and as much information on the event as possible.
-          Select a location (latitude and longitude) to help other users find
-          your content by left-clicking somewhere on the map. Finally upload a
-          photo or video, or paste a link related to your submission!
+          (refrain from using obscenity unless it's contextual). Be sure to give
+          context and as much information on the event as possible. Select a
+          location (latitude and longitude) to help other users find your
+          content by left-clicking somewhere on the map. Finally upload a photo
+          or video, or paste a link related to your submission!
         </DialogContentText>
         <Stack spacing={2}>
           <TextField
